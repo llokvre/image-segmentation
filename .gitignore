@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Logs
+*.log
+nohup.out
+
+# Large medical image files
+*.nii
+*.nii.gz
+*.mha
+*.nrrd
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.7z
+*.rar
+
+# nnU-Net large directories
+nnUNet_raw/
+nnUNet_preprocessed/
+nnUNet_results/
+Dataset*/
+datasets/
+raw/
+preprocessed/
+checkpoints/
+predictions/
+validation/
+imagesTs/
+labelsTs/
+imagesTr/
+labelsTr/
+
+# Model weights
+*.pth
+*.pt
+*.ckpt
+*.pkl
+
+# System / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Secrets
+.env
+*.key
+*_token*
+*password*

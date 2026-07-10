@@ -1,0 +1,23 @@
+[INFO] Started 2026-07-09T18:53:03
+[INFO] Output directory: /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop
+[WARNING] Full-only | Full input: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Full-only | Missing T1c: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Full-only | Missing FLAIR: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Full-only | Missing T2w: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Full-only | Missing T1n: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Modality Dropout | Full input: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Modality Dropout | Missing T1c: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Modality Dropout | Missing FLAIR: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Modality Dropout | Missing T2w: fallback values used because metric JSON unavailable/unparseable.
+[WARNING] Modality Dropout | Missing T1n: fallback values used because metric JSON unavailable/unparseable.
+[INFO] Saved /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/all_results_long.csv
+[INFO] Saved /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/all_results_wide.csv
+[INFO] Saved /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/all_results_summary.xlsx
+[INFO] Saved figure /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/absolute_dice_fullonly_vs_moddrop.png
+[INFO] Saved figure /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/dice_drop_fullonly_vs_moddrop.png
+[INFO] Saved figure /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/modality_region_risk_heatmap_fullonly.png
+[INFO] Saved figure /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/modality_region_risk_heatmap_moddrop.png
+[INFO] Saved figure /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/modality_dropout_recovery_heatmap.png
+[INFO] Saved figure /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/mean_dice_comparison.png
+[INFO] Saved figure /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/modality_dropout_recovery_table.png
+[INFO] Saved /root/autodl-tmp/nnunet_brats/missing_modality_benchmark/paper_assets_moddrop/README_paper_assets.md

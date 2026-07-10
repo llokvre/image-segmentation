@@ -1,0 +1,41 @@
+model,setting,missing_modality,metric_group,region,dice_mean,dice_std,source_json,used_fallback
+Full-only,Full input,None,all_cases,WT,0.9326,0.0839,FALLBACK,True
+Full-only,Full input,None,all_cases,TC,0.9106,0.1645,FALLBACK,True
+Full-only,Full input,None,all_cases,ET,0.8669,0.1943,FALLBACK,True
+Full-only,Full input,None,all_cases,Mean,0.9034,,FALLBACK,True
+Full-only,Missing T1c,T1c,all_cases,WT,0.9019,0.1116,FALLBACK,True
+Full-only,Missing T1c,T1c,all_cases,TC,0.2648,0.2955,FALLBACK,True
+Full-only,Missing T1c,T1c,all_cases,ET,0.0599,0.1643,FALLBACK,True
+Full-only,Missing T1c,T1c,all_cases,Mean,0.4089,,FALLBACK,True
+Full-only,Missing FLAIR,FLAIR,all_cases,WT,0.707,0.2335,FALLBACK,True
+Full-only,Missing FLAIR,FLAIR,all_cases,TC,0.8625,0.2317,FALLBACK,True
+Full-only,Missing FLAIR,FLAIR,all_cases,ET,0.8308,0.2296,FALLBACK,True
+Full-only,Missing FLAIR,FLAIR,all_cases,Mean,0.8001,,FALLBACK,True
+Full-only,Missing T2w,T2w,all_cases,WT,0.8334,0.2183,FALLBACK,True
+Full-only,Missing T2w,T2w,all_cases,TC,0.8578,0.2462,FALLBACK,True
+Full-only,Missing T2w,T2w,all_cases,ET,0.8391,0.2106,FALLBACK,True
+Full-only,Missing T2w,T2w,all_cases,Mean,0.8434,,FALLBACK,True
+Full-only,Missing T1n,T1n,all_cases,WT,0.9287,0.0613,FALLBACK,True
+Full-only,Missing T1n,T1n,all_cases,TC,0.9057,0.1547,FALLBACK,True
+Full-only,Missing T1n,T1n,all_cases,ET,0.8585,0.1837,FALLBACK,True
+Full-only,Missing T1n,T1n,all_cases,Mean,0.8976,,FALLBACK,True
+Modality Dropout,Full input,None,all_cases,WT,0.936,0.0835,FALLBACK,True
+Modality Dropout,Full input,None,all_cases,TC,0.9133,0.1558,FALLBACK,True
+Modality Dropout,Full input,None,all_cases,ET,0.8723,0.1833,FALLBACK,True
+Modality Dropout,Full input,None,all_cases,Mean,0.9072,,FALLBACK,True
+Modality Dropout,Missing T1c,T1c,all_cases,WT,0.9272,0.0887,FALLBACK,True
+Modality Dropout,Missing T1c,T1c,all_cases,TC,0.8095,0.1782,FALLBACK,True
+Modality Dropout,Missing T1c,T1c,all_cases,ET,0.654,0.2179,FALLBACK,True
+Modality Dropout,Missing T1c,T1c,all_cases,Mean,0.7969,,FALLBACK,True
+Modality Dropout,Missing FLAIR,FLAIR,all_cases,WT,0.9016,0.1027,FALLBACK,True
+Modality Dropout,Missing FLAIR,FLAIR,all_cases,TC,0.9024,0.1763,FALLBACK,True
+Modality Dropout,Missing FLAIR,FLAIR,all_cases,ET,0.8626,0.1956,FALLBACK,True
+Modality Dropout,Missing FLAIR,FLAIR,all_cases,Mean,0.8889,,FALLBACK,True
+Modality Dropout,Missing T2w,T2w,all_cases,WT,0.929,0.0855,FALLBACK,True
+Modality Dropout,Missing T2w,T2w,all_cases,TC,0.9049,0.1689,FALLBACK,True
+Modality Dropout,Missing T2w,T2w,all_cases,ET,0.8619,0.1967,FALLBACK,True
+Modality Dropout,Missing T2w,T2w,all_cases,Mean,0.8986,,FALLBACK,True
+Modality Dropout,Missing T1n,T1n,all_cases,WT,0.9338,0.0839,FALLBACK,True
+Modality Dropout,Missing T1n,T1n,all_cases,TC,0.9059,0.1657,FALLBACK,True
+Modality Dropout,Missing T1n,T1n,all_cases,ET,0.866,0.1868,FALLBACK,True
+Modality Dropout,Missing T1n,T1n,all_cases,Mean,0.9019,,FALLBACK,True
