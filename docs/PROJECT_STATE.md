@@ -1,58 +1,38 @@
-# BraTS 缺失模态脑肿瘤分割项目状态
+# BraTS 2023 缺失模态脑肿瘤分割项目状态
 
-> 最后更新：2026-07-02  
-> 当前阶段：已完成完整模态基线与四种单模态缺失压力测试；下一步开始 Modality Dropout baseline。
+> 最后更新：2026-07-10
+> 当前阶段：Full-only 与 Modality Dropout 的 fold 0 初步基线已完成；下一阶段进入模态—区域风险感知方法设计。
 
----
-
-## 1. 项目目标
-
-研究 BraTS 多模态 MRI 脑肿瘤分割在 MRI 模态缺失场景下的鲁棒性问题。
-
-当前研究路线：
+## 当前研究路线
 
 1. 完整模态 nnU-Net 基线；
-2. 缺失模态直接推理压力测试；
-3. Modality Dropout 鲁棒基线；
-4. 模态—区域风险建模；
-5. 风险校准伪标签与少标注训练；
-6. 最终五折交叉验证和论文实验。
+2. zero-filled missing-modality direct-inference 压力测试；
+3. Modality Dropout 强鲁棒性基线；
+4. 模态—区域风险矩阵与不确定性分析；
+5. 风险校准伪标签和缺失模态感知训练；
+6. 多折验证、消融实验和定性可视化。
 
-当前核心想法：
+## 当前证据
 
-> 不同 MRI 模态缺失会对不同肿瘤区域产生不均匀的风险，因此缺失模态下的伪标签筛选和训练策略不应使用统一全局阈值。
+- 数据集：BraTS 2023 GLI；数据不随仓库分发。
+- 配置：nnU-Net v2 `3d_fullres`，fold 0。
+- 验证病例：251。
+- Full-only：训练时只使用完整四模态。
+- Modality Dropout：50% 保留完整输入，50% 随机置零一个模态；验证和推理不随机 dropout。
+- 评估：Full、Missing T1c、Missing FLAIR、Missing T2w、Missing T1n。
+- 当前结果：single-fold preliminary benchmark，不宣称 SOTA、统计显著或临床验证。
 
----
+## 当前核心判断
 
-## 2. 数据集与标签
+Full-only 模型的退化与缺失模态和分割区域共同相关。Missing T1c 对 TC/ET 尤其不利，Missing FLAIR 对 WT 更不利；Modality Dropout 在当前四种压力测试中明显缓解退化，但 Missing T1c 下 ET 仍有残余下降。
 
-- 数据集：BraTS 2023 GLI Challenge Training Data
-- 总病例数：1251
-- 当前使用：fold 0
-- fold 0 训练集：1000 cases
-- fold 0 验证集：251 cases
+## 数据来源状态
 
-### MRI 通道顺序
+论文资产脚本会优先读取显式配置的 metric JSON；当前仓库没有原始实验 JSON/CSV 路径，因此现有表格使用人工确认的 fallback 数值。后续应在真实实验目录可用时通过 `--project-root` 和 `--benchmark-root` 传入路径，重新生成资产并保存来源日志。
 
-| 通道 | 模态 |
-|---|---|
-| `_0000` | T1n |
-| `_0001` | T1c |
-| `_0002` | T2w |
-| `_0003` | FLAIR / T2f |
+## 不应混淆的范围
 
-### BraTS 2023 标签
-
-| 标签 | 含义 |
-|---:|---|
-| 0 | 背景 |
-| 1 | NCR/NET：坏死区或非增强肿瘤核心 |
-| 2 | ED：瘤周水肿 |
-| 3 | ET：增强肿瘤 |
-
-### 区域定义
-
-```python
-WT = (seg == 1) | (seg == 2) | (seg == 3)
-TC = (seg == 1) | (seg == 3)
-ET = (seg == 3)
+- 本仓库不是 BraTS 数据分发仓库。
+- 当前结果不是最终临床性能。
+- Modality Dropout 是 strong baseline，不是最终创新方法。
+- 下一阶段的 risk-aware pseudo-labeling / risk-calibrated training 目前只是设计，不应写成已完成实验。

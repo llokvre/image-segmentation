@@ -1,54 +1,68 @@
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 .ipynb_checkpoints/
 
-# Logs
+# Logs and local run artefacts
 *.log
 nohup.out
+run_debug.log
+validation_log.txt
 
-# Large medical image files
+# Medical imaging data and derived volumes
 *.nii
 *.nii.gz
 *.mha
 *.nrrd
+*.dcm
+imagesTr/
+imagesTs/
+labelsTr/
+labelsTs/
+raw/
+preprocessed/
+predictions/
+validation/
+datasets/
+Dataset*/
 
-# Archives
+# nnU-Net working directories and model weights
+nnUNet_raw/
+nnUNet_preprocessed/
+nnUNet_results/
+checkpoints/
+*.pth
+*.pt
+*.ckpt
+*.pkl
+
+# Archives and local exports
 *.zip
 *.tar
 *.tar.gz
 *.7z
 *.rar
 
-# nnU-Net large directories
-nnUNet_raw/
-nnUNet_preprocessed/
-nnUNet_results/
-Dataset*/
-datasets/
-raw/
-preprocessed/
-checkpoints/
-predictions/
-validation/
-imagesTs/
-labelsTs/
-imagesTr/
-labelsTr/
-
-# Model weights
-*.pth
-*.pt
-*.ckpt
-*.pkl
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*.cer
+*.p12
+*_token*
+*token*
+*secret*
+*password*
+*passwd*
 
 # System / editor
 .DS_Store
+Thumbs.db
 .vscode/
 .idea/
-
-# Secrets
-.env
-*.key
-*_token*
-*password*
