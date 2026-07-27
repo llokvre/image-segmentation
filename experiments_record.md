@@ -517,3 +517,104 @@ Modality Dropout nnU-Net：
 - 两次运行 SHA256 完全一致：`3533a582bdc6bf8b8ddf1f3e6ae9e06e17373eb96f6ab4fa3c7a52c4103f708a`
 - Overall status: PASS
 <!-- AUTO_T1C_CASE_SELECTION_EXPERIMENT_END -->
+
+<!-- AUTO_T1C_QUALITATIVE_EXPERIMENT_START -->
+
+## 实验 D2：Missing T1c 确定性定性可视化
+
+### 1. 实验目的
+
+为 Missing T1c 条件下已经固定筛选的 5 个 fold 0 验证病例生成可重复的病例级定性证据，对照 Original T1c 参考背景、Ground Truth、Full-only Missing T1c 原始预测和 ModDrop Missing T1c 原始预测。
+
+### 2. 输入文件
+
+- 病例候选表：
+  `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/unified_evaluation/qualitative_case_candidates_t1c.csv`
+- 实验路径配置：
+  `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/unified_evaluation/experiment_paths.json`
+- Original T1c：
+  `/root/autodl-tmp/nnunet_brats/nnUNet_raw/Dataset501_BraTS2023/imagesTr`
+- Ground Truth、Full-only Missing T1c 和 ModDrop Missing T1c 的实际路径由 `experiment_paths.json` 与服务器真实目录共同验证。
+
+### 3. 输出与实现
+
+- 输出目录：
+  `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1`
+- 可视化脚本：
+  `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/05_generate_t1c_qualitative_figures.py`
+- Manifest：
+  `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/qualitative_visualization_manifest.csv`
+- 日志：
+  `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/qualitative_visualization_log.txt`
+- Manifest SHA256 文件：
+  `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/qualitative_visualization_manifest.sha256`
+
+### 4. 病例与确定性切片
+
+| Case ID | Selection reason | z | Slice basis |
+|---|---|---:|---|
+| BraTS_0277 | strongest_et_recovery | 55 | GT_ET_max_area |
+| BraTS_0501 | strongest_tc_recovery | 59 | GT_ET_max_area |
+| BraTS_0647 | largest_residual_et_gap | 91 | GT_ET_max_area |
+| BraTS_0302 | representative_median_recovery | 36 | GT_ET_max_area |
+| BraTS_1007 | collapse_then_robust_rescue | 96 | GT_ET_max_area |
+
+切片选择规则：逐病例统计 Ground Truth ET 在每个轴向切片上的面积，选择面积最大的切片；若并列则选择最小 z。仅在整个病例 ET 为空时才依次回退到 TC、WT。本阶段五个病例均使用 `GT_ET_max_area`。
+
+### 5. 显示规则
+
+- Original T1c 使用大于 0 的体素计算第 1 和第 99 百分位，裁剪到该范围后线性归一化至 0–1；同一病例四个面板共用同一个背景归一化结果。
+- 固定标签颜色：NCR/NET（label 1）为红色、Edema（label 2）为绿色、ET（label 3）为黄色；固定透明度 `alpha = 0.45`。
+- Original T1c 仅用于可视化参考，不是 Missing T1c 模型的输入。
+- Ground Truth、Full-only 和 ModDrop 使用相同的离散颜色映射与透明度。
+- 展示原始预测标签；未执行连通域处理、小区域移除、平滑、形态学、孔洞填充、阈值修改或标签修正。
+
+### 6. PNG 输出
+
+- `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/figures/cases/BraTS_0277.png`
+- `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/figures/cases/BraTS_0501.png`
+- `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/figures/cases/BraTS_0647.png`
+- `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/figures/cases/BraTS_0302.png`
+- `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/figures/cases/BraTS_1007.png`
+- `/root/autodl-tmp/nnunet_brats/missing_modality_benchmark/qualitative_t1c_v1/figures/summary/missing_t1c_qualitative_summary.png`
+
+### 7. 自动验收与确定性
+
+- Selected cases loaded: 5/5
+- Unique selected cases: 5/5
+- MRI files found: 5/5
+- Ground-truth files found: 5/5
+- Full-only prediction files found: 5/5
+- ModDrop prediction files found: 5/5
+- Shape checks: 5/5 PASS
+- Affine checks: 5/5 PASS
+- Invalid label files: 0
+- Slices selected: 5/5
+- Individual PNG files: 5/5
+- Summary PNG files: 1/1
+- Total PNG files: 6/6
+- Manifest rows: 5/5
+- Manifest missing values: 0
+- Case IDs identical to selection CSV: PASS
+- Repeated manifest SHA256 identical: PASS
+- Overall status: PASS
+
+两次 Manifest SHA256 完全一致：
+`56c1f2ef4ef06896bd7acc18ca613351d97a6ab40b6ce8ed387dcd9bee638c6f`
+
+### 8. 安全边界
+
+- 未运行新的模型推理或训练。
+- 未修改 NIfTI、Ground Truth、预测或 checkpoint。
+- 未应用预测后处理。
+- 未人工修改病例或切片。
+- 本实验仅产生定性可视化、Manifest、日志和校验文件。
+
+### 9. 实验结论
+
+- 定性证据与病例级数值筛选相对应。
+- 图像同时覆盖恢复成功、代表性恢复和残余失败。
+- BraTS_0647 可用于说明简单 ModDrop 仍存在 Missing T1c ET 残余失败。
+- 该结果支持下一步设计 modality-region risk-aware learning。
+
+<!-- AUTO_T1C_QUALITATIVE_EXPERIMENT_END -->

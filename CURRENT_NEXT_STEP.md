@@ -80,3 +80,48 @@
 
 更新时间：2026-07-27 13:03:04 +0800
 <!-- AUTO_CURRENT_NEXT_STEP_END -->
+
+<!-- AUTO_T1C_QUALITATIVE_CURRENT_START -->
+
+## Missing T1c 确定性定性可视化里程碑
+
+状态：**已完成并通过自动验收**。
+
+- 固定病例与确定性轴向切片：
+
+  | Case ID | z | Slice basis |
+  |---|---:|---|
+  | BraTS_0277 | 55 | GT_ET_max_area |
+  | BraTS_0501 | 59 | GT_ET_max_area |
+  | BraTS_0647 | 91 | GT_ET_max_area |
+  | BraTS_0302 | 36 | GT_ET_max_area |
+  | BraTS_1007 | 96 | GT_ET_max_area |
+
+- 所有切片均完全依据 Ground Truth 中 ET 面积最大的轴向切片自动选择；并列时使用最小 z 索引，未进行人工选片。
+- 已生成 5 张独立病例 PNG 和 1 张五病例汇总 PNG。
+- `qualitative_visualization_manifest.csv` 为 5 行、5 个唯一病例且无缺失值。
+- 两次独立运行得到完全一致的 Manifest SHA256：
+  `56c1f2ef4ef06896bd7acc18ca613351d97a6ab40b6ce8ed387dcd9bee638c6f`
+- 本阶段没有执行模型推理、模型训练、预测后处理或人工切片替换。
+- Original T1c 仅作为可视化参考背景，不是 Missing T1c 模型的输入。
+
+### 当前唯一下一步
+
+**编写 Risk-aware V1 工程设计文档。**
+
+设计文档只需明确：
+
+1. modality availability mask 的表示方式；
+2. mask 在网络中的注入位置；
+3. Missing T1c 对 TC/ET 的区域风险如何进入损失；
+4. region-weighted loss 的数学定义；
+5. 训练和推理协议；
+6. 第一轮消融实验；
+7. 与 ModDrop strong baseline 的公平比较；
+8. 失败回退条件。
+
+**当前只设计，不实现、不训练。**
+
+本区块是当前任务状态的唯一权威说明；此前指向“生成五个固定病例定性图”的下一步已经完成，不再是当前任务。
+
+<!-- AUTO_T1C_QUALITATIVE_CURRENT_END -->

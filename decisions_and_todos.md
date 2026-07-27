@@ -141,3 +141,39 @@ Modality Dropout 在完整输入下没有明显性能代价，并显著提升缺
 
 更新时间：2026-07-27 13:03:04 +0800
 <!-- AUTO_T1C_CASE_SELECTION_DECISIONS_END -->
+
+<!-- AUTO_T1C_QUALITATIVE_DECISIONS_START -->
+
+## Missing T1c 确定性定性可视化：决策与待办
+
+### 已确认决策
+
+1. 定性切片必须由 Ground Truth 自动选择，不能人工选片。
+2. 本阶段所有病例均使用 GT ET 最大面积轴向切片。
+3. Original T1c 仅作为可视化背景参考。
+4. 图中必须明确说明 Original T1c 不是 Missing T1c 模型输入，不能让读者产生相反理解。
+5. Ground Truth、Full-only 和 ModDrop 使用完全一致的标签颜色映射与透明度。
+6. 展示原始预测标签，不应用连通域、形态学、平滑、阈值修改或其他预测后处理。
+7. ModDrop 仍是 strong baseline，不是最终创新方法。
+8. BraTS_0647 是关键残余失败病例。
+9. 当前证据仅为 fold 0 qualitative evidence。
+10. 当前结果不能用于声称临床代表性、统计显著性、SOTA 或临床验证。
+
+### 已完成待办
+
+- [x] 生成五病例独立定性图。
+- [x] 生成五病例汇总图。
+- [x] 固定 GT 驱动切片规则。
+- [x] 验证重复运行 Manifest SHA256。
+- [x] 完成定性图自动验收。
+
+Manifest SHA256：
+`56c1f2ef4ef06896bd7acc18ca613351d97a6ab40b6ce8ed387dcd9bee638c6f`
+
+### 当前唯一待办
+
+- [ ] 编写 Risk-aware V1 工程设计文档。
+
+当前只进行设计文档编写；**不将 Risk-aware V1 的实现或训练标记为正在执行**。
+
+<!-- AUTO_T1C_QUALITATIVE_DECISIONS_END -->
