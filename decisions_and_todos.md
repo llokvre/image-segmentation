@@ -113,3 +113,31 @@ Modality Dropout 在完整输入下没有明显性能代价，并显著提升缺
 
 更新时间：2026-07-15 18:43:59
 <!-- AUTO_UNIFIED_EVAL_DECISIONS_END -->
+
+<!-- AUTO_T1C_CASE_SELECTION_DECISIONS_START -->
+# Missing T1c 定性病例筛选：研究决策与任务状态
+
+## 已确认的研究决策
+
+- 定性病例必须基于统一逐病例指标和固定规则自动筛选，不能人工挑选。
+- Modality Dropout 是 strong baseline，不是最终创新。
+- 五个病例分别覆盖恢复成功、TC 恢复、残余失败、中位代表和崩溃后挽救：
+  - `BraTS_0277` — `strongest_et_recovery`（恢复成功）；
+  - `BraTS_0501` — `strongest_tc_recovery`（TC 恢复）；
+  - `BraTS_0647` — `largest_residual_et_gap`（残余失败）；
+  - `BraTS_0302` — `representative_median_recovery`（中位代表）；
+  - `BraTS_1007` — `collapse_then_robust_rescue`（崩溃后挽救）。
+- `BraTS_0647` 是重要的 ModDrop 残余失败病例。
+- 当前先完成五病例定性图，之后才进入 Risk-aware V1。
+- 当前仍只是 fold 0 preliminary benchmark。
+- 当前是 zero-filled missing-modality stress test。
+- 不得宣称 SOTA、统计显著或临床验证。
+- 确定性选择签名：`3533a582bdc6bf8b8ddf1f3e6ae9e06e17373eb96f6ab4fa3c7a52c4103f708a`。
+
+## 任务状态
+
+- [x] 筛选五个 Missing T1c 病例。
+- [ ] **当前唯一待办：生成五病例 Missing T1c 定性对比图。**
+
+更新时间：2026-07-27 13:03:04 +0800
+<!-- AUTO_T1C_CASE_SELECTION_DECISIONS_END -->

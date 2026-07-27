@@ -32,70 +32,51 @@
 <!-- AUTO_CURRENT_NEXT_STEP_START -->
 # 当前状态与唯一下一步
 
-## 刚完成的阶段
-
-**BraTS 2023 GLI fold 0 十组统一逐病例评估流水线已完成，并通过导师验收。**
-
-完成内容：
-
-- Full-only nnU-Net：Full 与四种单模态缺失；
-- Modality Dropout nnU-Net：Full 与四种单模态缺失；
-- 共 10 组实验；
-- 每组使用相同的 251 个验证病例；
-- 从真实 prediction NIfTI 和 ground-truth NIfTI 重算 WT、TC、ET Dice；
-- 生成 10 份逐病例 CSV；
-- 生成 2510 行合并逐病例表；
-- 取消 fallback values；
-- 10/10 组历史参考指标核对通过。
-
-## 当前唯一任务
-
-**基于逐病例指标，按照固定规则筛选 5 个 Missing T1c 定性病例。**
-
-必须覆盖：
-
-1. ET 恢复量最大病例；
-2. TC 恢复量最大病例；
-3. ModDrop 后仍有最大 ET 残余差距病例；
-4. 接近总体中位恢复量的代表性病例；
-5. Full-only 几乎崩溃、ModDrop 恢复良好的病例。
-
-## 为什么它是当前最高优先级
-
-现有结果已经证明 Missing T1c 对 TC 和 ET 的风险最大。Modality Dropout 虽然大幅恢复性能，但 Missing T1c 下 ET 仍从完整输入的 0.8723 降至 0.6540。
-
-在训练 Risk-aware V1 前，先建立客观的病例级证据，可以：
-
-- 避免人工挑选最好看的病例；
-- 展示 ModDrop 的恢复能力和残余失败；
-- 为后续 Risk-aware 方法设计提供具体病例依据；
-- 为论文定性图和失败病例分析准备输入。
-
-## 导师验收标准
-
-必须生成：
-
-- `t1c_case_metrics_all_251.csv`
-- `qualitative_case_candidates_t1c.csv`
-- `qualitative_case_selection_log.txt`
-
-必须满足：
+## 刚完成：Missing T1c 定性病例自动筛选
 
 - Complete T1c cases: 251/251
 - Selected cases: 5/5
 - Unique selected cases: 5/5
 - Derived metric missing values: 0
 - Selected table missing values: 0
+- Selection reasons complete: PASS
+- 筛选过程不使用随机抽样，也不进行人工挑选。
+- 两次运行的确定性 SHA256 完全一致：`3533a582bdc6bf8b8ddf1f3e6ae9e06e17373eb96f6ab4fa3c7a52c4103f708a`
 - Overall status: PASS
 
-## 当前暂时不要做
+固定病例及筛选原因：
 
-- 不启动 5-fold；
-- 不开始 HD95；
-- 不同时复现多个新模型；
-- 不修改 backbone；
-- 不直接训练 Risk-aware V1；
-- 不手工挑选定性病例。
+| Case ID | selection_reason |
+|---|---|
+| BraTS_0277 | strongest_et_recovery |
+| BraTS_0501 | strongest_tc_recovery |
+| BraTS_0647 | largest_residual_et_gap |
+| BraTS_0302 | representative_median_recovery |
+| BraTS_1007 | collapse_then_robust_rescue |
 
-更新时间：2026-07-15 18:43:59
+## 当前唯一下一步
+
+**为上述五个固定病例生成第一版 Missing T1c 定性对比图。**
+
+第一版只比较：
+
+1. MRI 背景切片；
+2. Ground Truth；
+3. Full-only + Missing T1c；
+4. ModDrop + Missing T1c。
+
+病例 ID 和切片位置必须由脚本确定并固定，禁止人工挑选最好看的结果。当前收尾阶段不实际生成定性图。
+
+## 下一阶段验收标准
+
+- Cases rendered: 5/5
+- Case IDs identical to selection CSV: PASS
+- Missing MRI files: 0
+- Missing label files: 0
+- Missing prediction files: 0
+- Shape mismatches: 0
+- Output PNG files: 6/6
+- Overall status: PASS
+
+更新时间：2026-07-27 13:03:04 +0800
 <!-- AUTO_CURRENT_NEXT_STEP_END -->

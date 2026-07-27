@@ -442,3 +442,78 @@ Modality Dropout nnU-Net：
 
 基于逐病例结果，按固定规则筛选 5 个 Missing T1c 定性病例。
 <!-- AUTO_UNIFIED_EVAL_EXPERIMENT_END -->
+
+<!-- AUTO_T1C_CASE_SELECTION_EXPERIMENT_START -->
+# 实验 D1：Missing T1c 定性病例自动筛选
+
+## 实验状态
+
+**完成，自动验收通过。**
+
+记录更新时间：2026-07-27 13:03:04 +0800
+
+## 实验目的
+
+基于统一逐病例 WT、TC、ET Dice，使用可复现的固定规则选择 Missing T1c 定性病例，避免人工挑选最好看的结果，并同时覆盖恢复成功、代表性表现和残余失败。
+
+## 输入与输出
+
+输入：
+
+- `all_results_per_case.csv`
+- 四组实验：`fullonly_full`、`fullonly_missing_t1c`、`moddrop_full`、`moddrop_missing_t1c`
+- fold 0 验证病例：251
+
+输出：
+
+- `04_select_t1c_cases.py`
+- `t1c_case_metrics_all_251.csv`
+- `qualitative_case_candidates_t1c.csv`
+- `qualitative_case_selection_log.txt`
+- `qualitative_case_candidates_t1c.sha256`
+
+## 五类确定性筛选规则
+
+1. `strongest_et_recovery`：ET 恢复量最大；
+2. `strongest_tc_recovery`：TC 恢复量最大；
+3. `largest_residual_et_gap`：ModDrop 后 ET 残余差距最大；
+4. `representative_median_recovery`：接近总体中位恢复量；
+5. `collapse_then_robust_rescue`：Full-only 崩溃后被 ModDrop 稳健挽救。
+
+筛选过程无随机抽样。
+
+## 入选病例与关键指标
+
+| Case ID | selection_reason | TC recovery | ET recovery | ET residual gap |
+|---|---|---:|---:|---:|
+| BraTS_0277 | strongest_et_recovery | 0.9224 | 0.8812 | 0.0301 |
+| BraTS_0501 | strongest_tc_recovery | 0.9560 | 0.8436 | 0.0935 |
+| BraTS_0647 | largest_residual_et_gap | 0.1217 | 0.0000 | 0.9323 |
+| BraTS_0302 | representative_median_recovery | 0.6653 | 0.6877 | 0.2057 |
+| BraTS_1007 | collapse_then_robust_rescue | 0.7449 | 0.8222 | 0.0995 |
+
+## 首次运行问题与修复
+
+第一次运行的验收结果：
+
+- Selected table missing values: 4
+- Overall status: FAIL
+
+原因不是 Dice 缺失，而是临时辅助列 `distance_to_median_et_recovery` 只存在于中位病例候选表，合并选中病例时导致另外四个病例该列为 NaN。
+
+删除该辅助列后：
+
+- Selected table missing values: 0
+- Overall status: PASS
+
+## 确定性与最终验收
+
+- Complete T1c cases: 251/251
+- Selected cases: 5/5
+- Unique selected cases: 5/5
+- Derived metric missing values: 0
+- Selected table missing values: 0
+- Selection reasons complete: PASS
+- 两次运行 SHA256 完全一致：`3533a582bdc6bf8b8ddf1f3e6ae9e06e17373eb96f6ab4fa3c7a52c4103f708a`
+- Overall status: PASS
+<!-- AUTO_T1C_CASE_SELECTION_EXPERIMENT_END -->
