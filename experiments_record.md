@@ -618,3 +618,73 @@ Modality Dropout nnU-Net：
 - 该结果支持下一步设计 modality-region risk-aware learning。
 
 <!-- AUTO_T1C_QUALITATIVE_EXPERIMENT_END -->
+
+<!-- AUTO_A2_AVAILABILITY_EXPERIMENT_START -->
+## 实验 E：A2（ModDrop + Explicit Availability）fold 0 最终审计与冻结
+
+### 1. 训练与产物身份
+
+- 训练长度：1000 epochs。
+- 最佳 epoch：977。
+- 最佳 checkpoint SHA-256：`070250c3ddcba723b1279c7ba77e27e9bc59c7107feaff919dc1a20890fe2689`。
+- Stage 2C smoke test：PASS。
+- 最终 benchmark：251 个验证病例 × 5 种输入条件 = 1255 个预测。
+
+### 2. 最终 benchmark 结果
+
+| Condition | WT Dice | TC Dice | ET Dice | Mean Dice |
+|---|---:|---:|---:|---:|
+| Full | 0.93461020 | 0.91254931 | 0.87157229 | 0.90624393 |
+| Missing T1n | 0.93498348 | 0.91039477 | 0.86396869 | 0.90311564 |
+| Missing T1c | 0.92922966 | 0.81458839 | 0.65283265 | 0.79888357 |
+| Missing T2w | 0.93035692 | 0.91093994 | 0.86898677 | 0.90342788 |
+| Missing FLAIR | 0.90415494 | 0.90822155 | 0.86379868 | 0.89205839 |
+
+### 3. A2 相对 A1 的独立配对复算
+
+| Comparison | Mean difference | Median difference | Improved | Worsened | Unchanged |
+|---|---:|---:|---:|---:|---:|
+| Full Mean | -0.00093919 | -0.00028099 | 117 | 133 | 1 |
+| Missing T1c TC | +0.00506348 | +0.00230934 | 141 | 107 | 3 |
+| Missing T1c ET | -0.00119277 | -0.00013675 | 116 | 126 | 9 |
+| Missing T1c Mean | +0.00196931 | +0.00157609 | 144 | 106 | 1 |
+| Missing FLAIR WT | +0.00258751 | +0.00114528 | 147 | 103 | 1 |
+
+上述差值由真实 A1 病例级 CSV 与 A2 病例级 CSV 独立配对复算，不使用 fallback。与既有汇总的最大绝对差为 `4.701195222608229e-09`。
+
+### 4. 1255 个预测的独立只读审计
+
+- validation case 数：251；五个条件各 251 个预测，总计 1255。
+- 可读：1255/1255；非空：1255/1255。
+- prediction/GT shape 一致：1255/1255；affine 一致：1255/1255。
+- 标签合法：1255/1255；数值有限（无 NaN/Inf）：1255/1255。
+- 从 prediction 与 GT 独立复算 Dice 后，与病例级 CSV 的最大绝对差：`4.999047065190609e-09`，满足 `<1e-6`。
+- 与 all-results CSV 最大绝对差：`4.999047065190609e-09`；与 summary CSV 最大绝对差：`4.929621044702515e-09`。
+- 独立 Dice 复算：PASS；既有结果一致性：PASS；A2 vs A1 配对复算：PASS；总体审计：PASS。
+
+### 5. 小体积 padding 修复的科学语义审计
+
+原始 nnU-Net 会在生成滑窗 slicer 之前，用常数 0 对全部 8 个通道进行 padding。小体积输入因此会让 availability 通道的边界从应有常量变成 0。修复后的正式推理入口先执行相同的零 padding，因此 MRI 通道完全不变；随后仅把第 4–7 个 availability 通道的 padding 区填回各自 availability 常量，再委托原始 nnU-Net 滑窗逻辑。
+
+逐项核验结果：
+
+- 修复发生在 network forward 之前。
+- MRI padding 完全一致。
+- spatial shape 与 spatial revert slicer 完全一致。
+- availability 通道在 padding 后仍保持预期常量。
+- revert 后输出 shape 正确。
+- patch size 不变。
+- sliding-window geometry 不变。
+- Gaussian aggregation 不变。
+- mirroring/TTA 不变。
+- checkpoint 与网络权重不变。
+
+**Padding fix changes inference semantics: NO**
+
+### 6. 阶段结论
+
+**A2：WEAK。** Explicit Availability 带来少量正向信号：Missing T1c TC 和 Mean 略有提升，Missing FLAIR WT 略有提升；Missing T1c ET 未改善，Full 基本维持。证据不足以支持其作为核心创新，availability 仅保留为 conditioning variable。A2 不使用“显著提升”“稳健提升”或“SOTA”措辞。
+
+旧的 Risk-aware Region Loss 主线暂停。下一阶段为 **Teacher Qualification**；候选论文主假设为 **Selective Privileged Distillation**，但尚未验证。Teacher、KD、Vulnerability、Reliability 均尚未实现。
+
+<!-- AUTO_A2_AVAILABILITY_EXPERIMENT_END -->

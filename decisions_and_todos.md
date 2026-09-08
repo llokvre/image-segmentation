@@ -177,3 +177,27 @@ Manifest SHA256：
 当前只进行设计文档编写；**不将 Risk-aware V1 的实现或训练标记为正在执行**。
 
 <!-- AUTO_T1C_QUALITATIVE_DECISIONS_END -->
+
+<!-- AUTO_A2_AVAILABILITY_DECISIONS_START -->
+## A2 Availability 最终决策（2026-09-08，当前权威状态）
+
+### 决策依据
+
+- A2 = Modality Dropout + Explicit Availability；对照 A1 = Modality Dropout。
+- A2 fold 0 完成 1000 epochs，best epoch = 977；checkpoint SHA-256 为 `070250c3ddcba723b1279c7ba77e27e9bc59c7107feaff919dc1a20890fe2689`。
+- Stage 2C smoke test：PASS；251 病例、5 条件、1255 个预测的最终 benchmark 与独立只读审计：PASS。
+- A2 最终 Mean Dice：Full `0.90624393`，Missing T1n `0.90311564`，Missing T1c `0.79888357`，Missing T2w `0.90342788`，Missing FLAIR `0.89205839`。
+- 相对 A1 的关键配对均值差：Full Mean `-0.00093919`；Missing T1c TC `+0.00506348`；Missing T1c ET `-0.00119277`；Missing T1c Mean `+0.00196931`；Missing FLAIR WT `+0.00258751`。
+
+### 冻结决策
+
+1. A2 的证据等级冻结为 **WEAK**。
+2. availability 显示少量正向信号：Missing T1c 的 TC/Mean 略有提升，Missing FLAIR 的 WT 略有提升；但 Missing T1c ET 没有改善，Full 基本维持。
+3. 将“Explicit Availability 是核心论文贡献”的假设降级；availability 仅保留为 conditioning variable。
+4. A2 不得描述为“显著提升”“稳健提升”或“SOTA”。
+5. 小体积 padding 修复只修正 availability 边界常量；MRI padding、patch size、滑窗几何、Gaussian、mirroring/TTA、权重不变。**Padding fix changes inference semantics: NO**。
+6. 旧的 Risk-aware Region Loss 主线暂停；下一阶段切换为 **Teacher Qualification**。
+7. 下一篇论文候选假设为 **Selective Privileged Distillation**，但尚未验证。
+8. Teacher、KD、Vulnerability、Reliability 均未实现，不能在记录或论文中写成已有结果。
+
+<!-- AUTO_A2_AVAILABILITY_DECISIONS_END -->

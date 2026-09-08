@@ -1,7 +1,7 @@
 # 当前下一步
 
-> 最后更新：2026-07-09  
-> 当前阶段：Full-only 与 Modality Dropout 基线结果已整理成论文级图表。
+> 最后更新：2026-09-08
+> 当前阶段：A2（ModDrop + Explicit Availability）fold 0 已完成最终审计并冻结为 **WEAK**；下一阶段为 Teacher Qualification。
 
 ## 已完成
 
@@ -125,3 +125,52 @@
 本区块是当前任务状态的唯一权威说明；此前指向“生成五个固定病例定性图”的下一步已经完成，不再是当前任务。
 
 <!-- AUTO_T1C_QUALITATIVE_CURRENT_END -->
+
+<!-- AUTO_A2_AVAILABILITY_FREEZE_START -->
+## A2 Availability 最终审计与阶段冻结（当前权威状态）
+
+> 本节覆盖文档中更早的“当前阶段 / 下一步”描述。A2 已结束，不再继续训练、推理或扩展实验。
+
+### 已完成与已核验
+
+- A2 fold 0 完成 1000 epochs；最佳 epoch 为 977。
+- 最佳 checkpoint SHA-256：`070250c3ddcba723b1279c7ba77e27e9bc59c7107feaff919dc1a20890fe2689`。
+- Stage 2C smoke test：PASS。
+- 最终 benchmark：251 个验证病例 × 5 种输入条件，共 1255 个预测，独立只读审计 PASS。
+- 1255/1255 文件可读、非空、shape/affine 与 GT 一致、标签合法且数值有限。
+- 独立 Dice 复算与病例级 CSV 最大绝对差为 `4.999047065190609e-09`（阈值 `<1e-6`）。
+
+### A2 fold 0 最终结果
+
+| Condition | WT Dice | TC Dice | ET Dice | Mean Dice |
+|---|---:|---:|---:|---:|
+| Full | 0.93461020 | 0.91254931 | 0.87157229 | 0.90624393 |
+| Missing T1n | 0.93498348 | 0.91039477 | 0.86396869 | 0.90311564 |
+| Missing T1c | 0.92922966 | 0.81458839 | 0.65283265 | 0.79888357 |
+| Missing T2w | 0.93035692 | 0.91093994 | 0.86898677 | 0.90342788 |
+| Missing FLAIR | 0.90415494 | 0.90822155 | 0.86379868 | 0.89205839 |
+
+### 相对 A1（ModDrop）的关键配对差值
+
+- Full Mean：`-0.00093919`
+- Missing T1c TC：`+0.00506348`
+- Missing T1c ET：`-0.00119277`
+- Missing T1c Mean：`+0.00196931`
+- Missing FLAIR WT：`+0.00258751`
+
+### 冻结结论
+
+**A2 结论：WEAK。** Explicit Availability 带来少量正向信号，Missing T1c 的 TC 和 Mean 略有提升，Missing FLAIR 的 WT 略有提升；但 Missing T1c 的 ET 没有改善，Full 基本维持。现有证据不足以把 availability 作为论文核心创新，只保留为可用的 conditioning variable。A2 相关表述不得使用“显著提升”“稳健提升”或“SOTA”。
+
+小体积 padding 修复的科学语义审计通过：MRI padding、patch size、滑窗几何、Gaussian 聚合、mirroring/TTA 和模型权重均未改变；仅在进入网络前把 availability 通道的 padding 区恢复为对应常量。
+
+**Padding fix changes inference semantics: NO**
+
+### 接下来
+
+1. 进入 **Teacher Qualification**，先判断 teacher 是否具备足够、可复现的特权信息优势。
+2. 旧的 **Risk-aware Region Loss** 主线暂停。
+3. 下一篇论文候选假设为 **Selective Privileged Distillation**，但目前尚未验证。
+4. Teacher、KD、Vulnerability、Reliability 均尚未实现，不得写成已完成或正在运行。
+
+<!-- AUTO_A2_AVAILABILITY_FREEZE_END -->
