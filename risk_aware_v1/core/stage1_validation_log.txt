@@ -1,0 +1,153 @@
+Risk-aware V1 shared mathematical core — Stage 1 validation log
+Execution time: 2026-07-28T12:18:21.053906+08:00
+Host: AutoDL 835 / autodl-container-c0lvq7fw2w-4e18f09e
+Conda environment: nnunet
+PyTorch version: 2.12.1+cu130
+Execution device: CPU
+CUDA_VISIBLE_DEVICES: disabled for compile/test commands
+torch.cuda.is_available during validation: False
+
+=== V2 design inputs read ===
+[PASS] RISK_AWARE_V1_ENGINEERING_DESIGN_V2.md
+[PASS] BLOCKING_DECISIONS_RESOLVED.md
+[PASS] implementation_touchpoints_v2.txt
+[PASS] IMPLEMENTATION_READINESS_CHECKLIST_V2.md
+[PASS] source_code_evidence.txt
+[PASS] v2_validation_log.txt
+
+V2 design files loaded: 6/6
+Resolved items confirmed: 17
+STILL_UNKNOWN items confirmed: 3
+BLOCKED items confirmed: 0
+
+=== Preserved STILL_UNKNOWN items ===
+1. Historical Missing T1c zero-fill creation script was not found.
+   Stage 1 impact: none. Core APIs accept explicit availability and never rely
+   on a historical script.
+2. Historical complete inference CLI was not recovered.
+   Stage 1 impact: none. No predictor, inference CLI, or real inference is
+   implemented in Stage 1.
+3. V1 measured peak VRAM and unified inference runtime remain unavailable.
+   Stage 1 impact: none. Validation is synthetic CPU-only mathematics and does
+   not claim resource benchmarks.
+
+The three UNKNOWN items remain STILL_UNKNOWN. None changes availability
+validation, deterministic modality zeroing, 8-channel construction, WT/TC/ET
+targets, region Dice, risk weights, or deep-supervision region loss.
+
+=== Files created in the new isolated directory ===
+[PASS] risk_aware_core.py
+[PASS] test_risk_aware_core.py
+[PASS] CORE_API.md
+[PASS] stage1_validation_log.txt
+
+=== Compile check ===
+Command:
+CUDA_VISIBLE_DEVICES=-1 python -m py_compile risk_aware_core.py test_risk_aware_core.py
+Result: PASS
+
+=== CPU unittest results ===
+Command:
+CUDA_VISIBLE_DEVICES=-1 python -m unittest -v test_risk_aware_core.py
+
+[PASS] test_batch_with_full_and_missing_t1c_samples
+[PASS] test_broadcast_availability_shape_and_constants
+[PASS] test_deep_supervision_mismatched_lengths_rejected
+[PASS] test_deep_supervision_multiple_scales
+[PASS] test_eight_channel_input_shape_and_order
+[PASS] test_empty_gt_empty_prediction_loss_near_zero
+[PASS] test_empty_gt_nonempty_prediction_is_penalized
+[PASS] test_full_availability_keeps_all_modalities
+[PASS] test_full_input_risk_weights_equal_one
+[PASS] test_input_is_not_modified_in_place
+[PASS] test_invalid_availability_shape_rejected
+[PASS] test_invalid_availability_values_rejected
+[PASS] test_invalid_segmentation_labels_rejected
+[PASS] test_mask_matches_actual_zeroing
+[PASS] test_missing_t1c_risk_weights_are_sample_specific
+[PASS] test_missing_t1c_zeroes_only_channel_1
+[PASS] test_per_sample_missing_patterns
+[PASS] test_public_api_imports_successfully
+[PASS] test_region_loss_backward_is_finite
+[PASS] test_region_loss_has_no_nan_or_inf
+[PASS] test_region_loss_per_sample_per_region_shape
+[PASS] test_region_probabilities_shape_and_logic
+[PASS] test_region_targets_wt_tc_et_logic
+[PASS] test_repeated_run_is_deterministic
+[PASS] test_risk_matrix_has_no_gradient
+[PASS] test_risk_weights_mean_equals_one
+[PASS] test_risk_weights_respect_clamp_and_renormalization
+[PASS] test_total_loss_backward_is_finite
+[PASS] test_total_loss_lambda_point_two
+[PASS] test_weighted_region_loss_scalar
+[PASS] test_zero_weight_deep_supervision_scale_ignored
+
+Test runtime: 0.214 seconds
+Tests run: 31
+Tests passed: 31
+Failures: 0
+Errors: 0
+Skipped: 0
+
+=== Category acceptance ===
+[PASS] Availability validation, device/batch checks, zeroing and broadcasting.
+[PASS] Non-inplace and per-sample missing-modality behavior.
+[PASS] Fixed 8-channel ordering and zeroing/mask consistency.
+[PASS] WT/TC/ET target construction and invalid-label rejection.
+[PASS] Four-class softmax to WT/TC/ET probability construction.
+[PASS] Per-sample/per-region non-squared soft Dice with smooth=1e-5.
+[PASS] Empty/empty and empty/nonempty region behavior.
+[PASS] V2 risk weighting, alpha=1.0, clamp=[0.5,1.5], re-normalization.
+[PASS] Full-modality weights exactly [1,1,1].
+[PASS] Region reduction is sum over three weighted regions divided by 3,
+       followed by batch mean.
+[PASS] Total loss uses lambda_region=0.2 without recomputing base loss.
+[PASS] Existing multi-scale targets are consumed directly; zero-weight scale
+       ignored and mismatched scale counts rejected.
+[PASS] L_region.backward() and L_total.backward() produce finite logits grads.
+[PASS] risk_matrix.grad and availability.grad remain None.
+[PASS] Repeated identical inputs produce identical deterministic outputs.
+
+=== Safety boundary ===
+Existing files modified: NO
+Existing training code modified: NO
+Existing baseline Trainer modified: NO
+nnunetv2 site-packages modified: NO
+Trainer created: NO
+Predictor created: NO
+Random Modality Dropout sampler created: NO
+Training started: NO
+Inference started: NO
+Calibration started: NO
+Checkpoint loaded: NO
+NIfTI accessed: NO
+Real medical data accessed: NO
+GPU used: NO
+Project Markdown updated: NO
+Git commit created: NO
+GitHub push performed: NO
+
+=== Final summary ===
+V2 design files loaded: 6/6
+Blocking design conflicts: 0
+Non-blocking UNKNOWN items preserved: 3
+Core module created: PASS
+API documentation created: PASS
+Python compile check: PASS
+Unit tests total: 31
+Unit tests passed: 31
+Unit tests failed: 0
+Unit tests errors: 0
+Availability tests: PASS
+Region-target tests: PASS
+Empty-region tests: PASS
+Risk-weight tests: PASS
+Deep-supervision tests: PASS
+Gradient tests: PASS
+Determinism tests: PASS
+Existing training code modified: NO
+Trainer created: NO
+Training started: NO
+Inference started: NO
+Calibration started: NO
+Overall status: PASS

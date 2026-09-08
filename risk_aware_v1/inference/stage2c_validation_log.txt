@@ -1,0 +1,35 @@
+Stage 2C final validation
+Training completed naturally: PASS
+Final epoch: 999
+Training process count: 0
+checkpoint_best.pth exists: PASS
+checkpoint_final.pth exists: PASS
+Training log clean: PASS
+A1 directory unchanged: PASS
+Checkpoint used: /root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerModDropAvailabilityMask__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth
+Checkpoint input channels: 8
+Output classes: 4
+Missing keys: 0
+Unexpected keys: 0
+Explicit missing-pattern interface: PASS
+Availability inferred from zero MRI: NO
+Sliding-window receives 8 channels: PASS
+Availability/zeroing consistency: PASS
+Smoke case: BraTS_0000
+Fold 0 validation member: PASS
+Full prediction count: 1/1
+Missing T1c prediction count: 1/1
+Full WT Dice: 0.9335819236098045
+Full TC Dice: 0.9831066330814442
+Full ET Dice: 0.9674165666631223
+Full Mean Dice: 0.9613683744514571
+Missing T1c WT Dice: 0.9383359144023652
+Missing T1c TC Dice: 0.9319303624728523
+Missing T1c ET Dice: 0.8130531152421169
+Missing T1c Mean Dice: 0.8944397973724447
+Stage 1 regression: 31/31 PASS
+Stage 2A regression: 24/24 PASS
+Stage 2C tests: 22/22 PASS
+Residual inference processes: 0
+Full five-condition benchmark started: NO
+Overall status: PASS

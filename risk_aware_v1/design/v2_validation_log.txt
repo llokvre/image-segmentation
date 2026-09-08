@@ -1,0 +1,86 @@
+Risk-aware V1 design V2 validation log
+Date: 2026-07-27 Asia/Shanghai
+Mode: design-only, read-only source/code audit
+
+=== Source documents ===
+[PASS] Read original design files 4/4.
+[PASS] Read mentor review files 3/3.
+[PASS] Strict UTF-8.
+[PASS] Baseline SHA256 recorded:
+b65fdcbb4cbaca573d5e5725f7d41c71325bd753bf738a899d0cea18668eb62e RISK_AWARE_V1_ENGINEERING_DESIGN.md
+8145ec09ddd33c8e57ad17be016719d2bc50359dbdb9a8b4262e219a017344a9 implementation_touchpoints.txt
+1c05c28901d5bf747df7db37e897b2a87a9d824f2fdece938865eb2889248dbd design_validation_log.txt
+2bfad90e1aa2c210057f289d4b33e754f88659976d56e0b695f6c68d2db38a79 observed_fold0_risk_motivation.csv
+665111f5d0404bcca0f6fde7c06b8f003ed5a8c9f05b0d49307fca501ba0f6de MENTOR_REVIEW_SUMMARY.md
+f4452c60221fa39c88355e6e868657916ba8ba40b53913eb3c83721d6758de98 IMPLEMENTATION_READINESS_CHECKLIST.md
+3d5d6910e2453fee0ab64c43414b51498e829d6c844ebc12c20b7c1b0edef9e2 review_validation_log.txt
+
+=== Runtime boundary ===
+[PASS] AutoDL connection.
+[PASS] RTX 4090 visible.
+[PASS] No GPU compute process.
+[PASS] No training/inference process.
+
+=== inspect evidence ===
+[PASS] nnUNetTrainer class signature inspected.
+[PASS] initialize(self), lines 209-278.
+[PASS] build_network_architecture real signature, lines 349-381.
+[PASS] _build_loss(self), lines 436-470.
+[PASS] train_step(self,batch), lines 1019-1049.
+[PASS] validation_step(self,batch), lines 1066-1131.
+[PASS] nnUNetTrainerModalityDropout class and methods inspected.
+[PASS] Predictor decorated methods inspected with inspect.unwrap.
+[PASS] Sliding-window pad/slicer/network/TTA paths identified.
+[PASS] DS target list uses nearest-exact.
+
+=== Checkpoint evidence ===
+[PASS] experiment_paths.json identifies A1 full validation and all A1 missing prediction directories.
+[PASS] experiments_record.md identifies checkpoint_best.pth for formal A1 missing benchmarks.
+[PASS] Prediction plans.json SHA equals A1 model plans.json SHA.
+[PASS] Prediction dataset.json SHA equals A1 model dataset.json SHA.
+[PASS] Training log confirms fold0=1000/251 and best EMA update at epoch 954.
+[PASS] checkpoint metadata:
+trainer_name=nnUNetTrainerModalityDropout
+configuration=3d_fullres
+fold=0
+current_epoch=955
+first_5d_weight=[32,4,3,3,3]
+[PASS] checkpoint SHA256:
+77a3257fe0e75ac4256843ea9aced954a2db11f4ce2d18e07efafcaf29fa184b
+[PASS] Calibration checkpoint uniquely identified.
+
+=== V2 acceptance ===
+[PASS] Real build_network_architecture signature corrected.
+[PASS] Real train_step signature verified.
+[PASS] Real validation_step signature verified.
+[PASS] Availability injection point verified.
+[PASS] Inference injection point verified.
+[PASS] A3 availability source specified.
+[PASS] Deep-supervision target structure verified.
+[PASS] Empty-region behavior fixed.
+[PASS] Alpha locked: 1.0; candidates {0.5,1.0,2.0}.
+[PASS] Lambda locked: 0.2; candidates {0.1,0.2,0.5}.
+[PASS] Clamp locked: [0.5,1.5] then re-normalize.
+[PASS] Success thresholds locked.
+[PASS] risk-matrix-v2.0 schema locked.
+
+Original design conflicts: 5
+Original UNKNOWN items: 9
+Original mentor decisions: 6
+RESOLVED: 17
+STILL_UNKNOWN: 3
+BLOCKED: 0
+Implementation readiness item 25: PASS
+
+=== Safety ===
+[PASS] Original design files modified: NO.
+[PASS] Review files modified: NO.
+[PASS] Training code modified: NO.
+[PASS] Trainer created: NO.
+[PASS] Training started: NO.
+[PASS] Inference started: NO.
+[PASS] Calibration started: NO.
+[PASS] Checkpoint modified: NO.
+[PASS] NIfTI modified: NO.
+[PASS] Project Markdown updated: NO.
+[PASS] Git commit/push: NO.

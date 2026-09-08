@@ -1,0 +1,191 @@
+Risk-aware V1 implementation touchpoints V2
+Date: 2026-07-27
+Status: DESIGN ONLY
+
+=== NEW FILE: risk_aware_v1_impl/risk_aware/availability.py ===
+Functions:
+1) apply_modality_dropout_with_availability(
+     data: torch.Tensor,
+     probability: float,
+     generator: Optional[torch.Generator] = None
+   ) -> tuple[torch.Tensor, torch.Tensor]
+   Input data: [B,4,D,H,W].
+   Output: zero-filled MRI [B,4,D,H,W], availability [B,4].
+   One sampling result drives both zeroing and mask.
+
+2) validate_availability_consistency(
+     data: torch.Tensor,
+     availability: torch.Tensor,
+     allow_multiple_missing: bool = False
+   ) -> None
+   Raises ValueError/AssertionError on shape, binary, pattern or zero-channel mismatch.
+
+3) broadcast_and_concatenate_availability(
+     data: torch.Tensor,
+     availability: torch.Tensor
+   ) -> torch.Tensor
+   Output: [B,8,D,H,W], same dtype/device as data.
+
+=== NEW FILE: risk_aware_v1_impl/risk_aware/region_loss.py ===
+Class: RiskAwareDeepSupervisionLoss(torch.nn.Module)
+Constructor inputs:
+- base_loss leaf module
+- frozen risk_matrix Tensor[4,3]
+- alpha: float = 1.0
+- lambda_region: float = 0.2
+- ds_weights: Sequence[float]
+- weight_clip: tuple[float,float] = (0.5,1.5)
+
+Methods:
+- build_region_targets(target: Tensor[B,1,...]) -> Tensor[B,3,...]
+- logits_to_region_probabilities(logits: Tensor[B,4,...]) -> Tensor[B,3,...]
+- compute_region_weights(
+    availability: Tensor[B,4], risk_matrix: Tensor[4,3]
+  ) -> Tensor[B,3]
+- forward_one_scale(
+    logits, target, weights
+  ) -> tuple[scalar_loss, detached_stats]
+- forward(
+    outputs: Union[Tensor,List[Tensor]],
+    targets: Union[Tensor,List[Tensor]],
+    availability: Tensor[B,4]
+  ) -> tuple[scalar_total_loss, detached_stats]
+
+Rules:
+- softmax dim=1; per-sample WT/TC/ET; eps=1e-5; no square/background.
+- Uses existing target list; never downsamples a target twice.
+- R registered as buffer, requires_grad=False; weights detached.
+- NaN/Inf raises immediately.
+
+=== NEW FILE: risk_aware_v1_impl/risk_aware/risk_matrix.py ===
+Schema: risk-matrix-v2.0.
+Functions:
+- load_and_validate_frozen_risk_matrix(
+    csv_path: str, expected_fold: int,
+    expected_checkpoint_sha256: str,
+    expected_split_sha256: str
+  ) -> torch.Tensor[4,3]
+- normalize_risk_rows(risk_raw: ndarray[4,3]) -> ndarray[4,3]
+Hard guards: 12 rows, fold-specific training scope, n_cases=1000,
+no validation IDs, hashes match, risk_norm finite and in [0,1].
+
+=== NEW FILE: risk_aware_v1_impl/risk_aware/predictor.py ===
+Class: RiskAwareNNUNetPredictor(nnUNetPredictor)
+Parent real definitions:
+- predict_logits_from_preprocessed_data(self, data: torch.Tensor) -> torch.Tensor
+- predict_sliding_window_return_logits(
+    self, input_image: torch.Tensor
+  ) -> Union[np.ndarray, torch.Tensor]
+
+New method:
+- set_availability_vector(
+    self, availability: Sequence[int]
+  ) -> None
+
+Override with exact parent-compatible signature:
+- predict_sliding_window_return_logits(
+    self, input_image: torch.Tensor
+  ) -> Union[np.ndarray, torch.Tensor]
+
+Flow:
+validate explicit vector -> zero specified preprocessed MRI channel ->
+pad MRI -> broadcast mask over padded shape -> concatenate -> generate
+slicers -> inherited _internal_predict_sliding_window_return_logits ->
+revert padding.
+
+=== NEW TRAINER A2 ===
+File:
+risk_aware_v1_impl/nnunetv2_ext/training/nnUNetTrainer/nnUNetTrainerModDropAvailabilityMask.py
+Class: nnUNetTrainerModDropAvailabilityMask(nnUNetTrainer)
+Overrides:
+@staticmethod
+build_network_architecture(
+  plans_manager: PlansManager,
+  configuration_manager: ConfigurationManager,
+  num_input_channels: int,
+  num_output_channels: int,
+  enable_deep_supervision: bool = True
+) -> nn.Module
+train_step(self, batch: dict) -> dict
+validation_step(self, batch: dict) -> dict
+Network: 8 channel. Loss: unchanged L_base.
+
+=== NEW TRAINER A3 ===
+File:
+risk_aware_v1_impl/nnunetv2_ext/training/nnUNetTrainer/nnUNetTrainerModDropRiskRegion.py
+Class: nnUNetTrainerModDropRiskRegion(nnUNetTrainer)
+Overrides:
+_build_loss(self)
+train_step(self, batch: dict) -> dict
+validation_step(self, batch: dict) -> dict
+Network: 4 channel. Availability returned by sampler only for loss.
+Inference: standard predictor, no availability argument.
+
+=== NEW TRAINER A4 ===
+File:
+risk_aware_v1_impl/nnunetv2_ext/training/nnUNetTrainer/nnUNetTrainerRiskAwareV1.py
+Class: nnUNetTrainerRiskAwareV1(nnUNetTrainer)
+Overrides:
+build_network_architecture with exact A2 signature
+_build_loss(self)
+train_step(self, batch: dict) -> dict
+validation_step(self, batch: dict) -> dict
+Network: 8 channel. Availability used for input and loss.
+
+=== CALIBRATION SCRIPT ===
+File: risk_aware_v1_impl/scripts/calibrate_training_only_risk.py
+Inputs:
+- fold 0 splits_final.json train list only
+- frozen A1 checkpoint_best.pth
+- checkpoint SHA256 77a3257fe0e75ac4256843ea9aced954a2db11f4ce2d18e07efafcaf29fa184b
+- Full and four single-missing conditions
+Outputs:
+- per-case Dice files
+- risk_matrix_fold0_training_only.csv (risk-matrix-v2.0)
+- case_manifest_fold0.txt
+- calibration_provenance_fold0.json
+No validation IDs allowed.
+
+=== TRAIN/PREDICT SCRIPTS ===
+train_ablation_fold0.sh:
+- sets nnUNet_extTrainer and PYTHONPATH
+- launches only explicitly requested A2/A3/A4
+- unique Trainer result directories
+
+predict_ablation_fold0.py:
+- A0/A1/A3 use standard predictor and 4-channel protocol
+- A2/A4 use RiskAwareNNUNetPredictor and explicit availability
+- writes unique condition folders
+
+=== TEST FILES ===
+tests/test_availability.py
+tests/test_region_loss.py
+tests/test_deep_supervision.py
+tests/test_risk_matrix.py
+tests/test_checkpoint_and_predictor.py
+tests/smoke_gpu_batch.py
+tests/smoke_inference_case.py
+
+=== EXISTING FILES: MUST NOT MODIFY ===
+/root/autodl-tmp/nnunet_brats/modality_dropout_baseline/trainers/nnUNetTrainerModalityDropout.py
+/root/miniconda3/envs/nnunet/lib/python3.10/site-packages/nnunetv2/training/nnUNetTrainer/nnUNetTrainerModalityDropout.py
+/root/miniconda3/envs/nnunet/lib/python3.10/site-packages/nnunetv2/training/nnUNetTrainer/nnUNetTrainer.py
+/root/miniconda3/envs/nnunet/lib/python3.10/site-packages/nnunetv2/inference/predict_from_raw_data.py
+/root/miniconda3/envs/nnunet/lib/python3.10/site-packages/batchgeneratorsv2/transforms/utils/deep_supervision_downsampling.py
+Dataset501 raw/preprocessed/plans/splits
+all existing A0/A1 checkpoints and results
+CURRENT_NEXT_STEP.md
+decisions_and_todos.md
+experiments_record.md
+
+Never edit nnUNetTrainerModalityDropout in place.
+Never edit nnunetv2 site-packages directly.
+
+=== OUTPUT ISOLATION ===
+Results:
+nnUNet_results/Dataset501_BraTS2023/<new-Trainer>__nnUNetPlans__3d_fullres/fold_0/
+Checkpoints: standard checkpoint_best.pth and checkpoint_final.pth inside new folder.
+Predictions:
+risk_aware_v1_predictions/<A-ID>_fold0_<condition>/predictions/
+Evaluation:
+risk_aware_v1_evaluation/<A-ID>_fold0_<condition>/

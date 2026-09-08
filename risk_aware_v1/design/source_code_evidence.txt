@@ -1,0 +1,198 @@
+Risk-aware V1 V2 source-code evidence
+Collected: 2026-07-27
+Method: direct source read + Python inspect/inspect.unwrap
+No full site-packages source copied.
+
+1) Base Trainer class
+Path:
+/root/miniconda3/envs/nnunet/lib/python3.10/site-packages/nnunetv2/training/nnUNetTrainer/nnUNetTrainer.py
+Class: nnUNetTrainer
+Class signature:
+(plans: dict, configuration: str, fold: int, dataset_json: dict,
+ device: torch.device=torch.device("cuda"))
+Lines: 75-1438
+V2 use: parent of all three new Trainers.
+
+2) initialize
+Path: same nnUNetTrainer.py
+Function/signature: nnUNetTrainer.initialize(self)
+Lines: 209-278
+Key calls:
+- line 215 determine_num_input_channels(...) -> current Dataset501 value 4
+- lines 218-226 inspect/call self.build_network_architecture
+- line 255 self._build_loss()
+V2 override: none. New build method receives reported 4 and deliberately builds 8 for A2/A4.
+
+3) build_network_architecture
+Path: same nnUNetTrainer.py
+Signature:
+nnUNetTrainer.build_network_architecture(
+ plans_manager: PlansManager,
+ configuration_manager: ConfigurationManager,
+ num_input_channels: int,
+ num_output_channels: int,
+ enable_deep_supervision: bool=True
+) -> nn.Module
+Lines: 349-381
+Caller: initialize lines 218-226; predictor initialization lines 102-108.
+V2 override:
+static method with exact same signature; asserts incoming 4 and calls parent with 8,
+preserving num_output_channels and enable_deep_supervision.
+
+4) base _build_loss
+Path: same nnUNetTrainer.py
+Signature: nnUNetTrainer._build_loss(self)
+Lines: 436-470
+Evidence:
+Dataset501 uses DC_and_CE_loss; smooth=1e-5, do_bg=False,
+batch_dice from plan=False; DS weights exponential, last weight set 0,
+normalized to sum 1.
+V2 override: A3/A4 create composite base+region DS loss; A2 inherits base.
+
+5) base train_step
+Path: same nnUNetTrainer.py
+Signature: nnUNetTrainer.train_step(self, batch: dict) -> dict
+Lines: 1019-1049
+Calls: batch["data"], batch["target"], device transfer, network(data),
+self.loss(output,target), AMP, backward, grad clip 12, optimizer.
+V2 override: new Trainers reproduce this control flow with minimum additions.
+
+6) base validation_step
+Path: same nnUNetTrainer.py
+Signature: nnUNetTrainer.validation_step(self, batch: dict) -> dict
+Lines: 1066-1131
+Calls: device transfer, network(data), loss; highest DS output [0] for online eval.
+V2 override: A2/A4 append Full mask; A3 supplies Full availability only to loss.
+No random ModDrop.
+
+7) active ModDrop class
+Path:
+/root/miniconda3/envs/nnunet/lib/python3.10/site-packages/nnunetv2/training/nnUNetTrainer/nnUNetTrainerModalityDropout.py
+Class/signature:
+nnUNetTrainerModalityDropout(
+ plans: dict, configuration: str, fold: int, dataset_json: dict,
+ device: torch.device=torch.device("cuda"))
+Lines: 8-93
+Parent: nnUNetTrainer
+
+8) active apply_modality_dropout
+Path: same ModDrop file
+Signature:
+apply_modality_dropout(data: torch.Tensor, probability: float) -> torch.Tensor
+Lines: 25-59
+Evidence:
+torch.rand(B,device=data.device) independent trigger;
+torch.randint(size=(B,),device=data.device) independent channel;
+data[selected_samples,selected_channels]=0.
+V2 replacement in new files only:
+apply_modality_dropout_with_availability(...) -> (data,availability).
+
+9) active ModDrop train_step
+Path: same ModDrop file
+Signature: train_step(self, batch: dict) -> dict
+Lines: 61-93
+Call order:
+data/target -> data.to(device) -> ModDrop -> network(data) -> loss.
+Because dataloader transforms precede train_step, injection is post-augmentation.
+V2 override: new classes; existing file remains unchanged.
+
+10) dataloaders/augmentation
+Path: base nnUNetTrainer.py
+Function: get_dataloaders(self)
+Lines: 668 onward
+Training transforms constructed lines 687-693 and passed to loader lines 703-710.
+V2 implication: train_step sees augmented data. Runtime mask is created afterward.
+
+11) predictor model initialization
+Path:
+/root/miniconda3/envs/nnunet/lib/python3.10/site-packages/nnunetv2/inference/predict_from_raw_data.py
+Signature:
+initialize_from_trained_model_folder(
+ self, model_training_output_dir: str,
+ use_folds: Optional[Tuple[Union[int,str]]],
+ checkpoint_name: str="checkpoint_final.pth")
+Lines: 68-142
+Calls:
+checkpoint trainer_name -> trainer build_network_architecture
+(lines 99-108) -> strict network.load_state_dict (line 131).
+V2: new checkpoint trainer_name reconstructs 8-channel network.
+
+12) predictor preprocessed-logits entry
+Path: same predict_from_raw_data.py (inspect.unwrap verified)
+Signature:
+predict_logits_from_preprocessed_data(self,data:torch.Tensor)->torch.Tensor
+Lines: 500-535
+Caller: prediction pipeline after preprocessing.
+Calls predict_sliding_window_return_logits(data), lines 524-527.
+V2: inherited caller reaches overridden method.
+
+13) predictor sliding-window entry
+Path: same predict_from_raw_data.py (inspect.unwrap verified)
+Signature:
+predict_sliding_window_return_logits(
+ self,input_image:torch.Tensor
+) -> Union[np.ndarray,torch.Tensor]
+Lines: 666-713
+Evidence:
+input expected [C,x,y,z]; pad_nd_image lines 689-692;
+slicers line 694; internal prediction lines 699-708; revert padding line 712.
+V2 override: pad MRI first, append constant availability across padded shape,
+then generate slicers and call inherited internal predictor.
+
+14) internal sliding-window
+Path: same predict_from_raw_data.py (inspect.unwrap verified)
+Signature:
+_internal_predict_sliding_window_return_logits(
+ self,data:torch.Tensor,slicers,do_on_device:bool=True)
+Lines: 592-664
+Evidence: producer line 603 clones d[s][None], where slice(None) keeps all channels.
+V2: each patch contains all 8 channels.
+
+15) network/TTA call
+Path: same predict_from_raw_data.py (inspect.unwrap verified)
+Signature:
+_internal_maybe_mirror_and_predict(self,x:torch.Tensor)->torch.Tensor
+Lines: 573-590
+Evidence: self.network(x) line 576; mirrored network calls line 588.
+V2: constant availability unchanged by torch.flip.
+
+16) deep-supervision target generation
+Path:
+/root/miniconda3/envs/nnunet/lib/python3.10/site-packages/batchgeneratorsv2/transforms/utils/deep_supervision_downsampling.py
+Class: DownsampleSegForDSTransform
+Method:
+_apply_to_segmentation(self,segmentation:torch.Tensor,**params)->List[Tensor]
+Lines: 8-28
+Evidence: interpolate(...,mode="nearest-exact") line 27.
+Actual debug target scales:
+[1,1/2,1/4,1/8,1/16].
+V2: consume existing target list directly.
+
+17) network configuration
+Path:
+/root/autodl-tmp/nnunet_brats/nnUNet_preprocessed/Dataset501_BraTS2023/nnUNetPlans.json
+3d_fullres:
+batch=2; patch=[128,128,128]; PlainConvUNet; 6 stages;
+features=[32,64,128,256,320,320]; Conv3d; kernel 3^3;
+first stride 1; later stride 2; conv_bias=True.
+Current debug num_input_channels=4.
+
+18) calibration checkpoint evidence
+Path:
+/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerModalityDropout__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth
+SHA256:
+77a3257fe0e75ac4256843ea9aced954a2db11f4ce2d18e07efafcaf29fa184b
+Size: 250143411 bytes
+Metadata:
+trainer_name=nnUNetTrainerModalityDropout
+configuration=3d_fullres
+fold=0
+current_epoch=955
+first 5D weight encoder.stages.0.0.convs.0.conv.weight [32,4,3,3,3]
+Cross-evidence:
+- unified_evaluation/experiment_paths.json maps A1 full to this Trainer validation folder.
+- experiments_record.md records checkpoint_best.pth for formal A1 missing benchmarks.
+- missing T1c prediction plans.json/dataset.json SHA match this model folder.
+- training log records fold0 1000/251 and best EMA update at epoch 954,
+  matching checkpoint mtime/current_epoch convention.
+V2 use: frozen calibration model only; never initialize A2/A4 from it.

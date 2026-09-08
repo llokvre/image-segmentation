@@ -197,7 +197,7 @@ Manifest SHA256：
 4. A2 不得描述为“显著提升”“稳健提升”或“SOTA”。
 5. 小体积 padding 修复只修正 availability 边界常量；MRI padding、patch size、滑窗几何、Gaussian、mirroring/TTA、权重不变。**Padding fix changes inference semantics: NO**。
 6. 旧的 Risk-aware Region Loss 主线暂停；下一阶段切换为 **Teacher Qualification**。
-7. 下一篇论文候选假设为 **Selective Privileged Distillation**，但尚未验证。
+7. 当前主研究假设为 **Missingness-conditioned selective privileged distillation**，但尚未验证；已完成路线为 A0 Full-only、A1 ModDrop、A2 Availability。
 8. Teacher、KD、Vulnerability、Reliability 均未实现，不能在记录或论文中写成已有结果。
 
 <!-- AUTO_A2_AVAILABILITY_DECISIONS_END -->

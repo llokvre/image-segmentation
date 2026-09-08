@@ -168,9 +168,11 @@
 
 ### 接下来
 
+当前已完成路线：**A0 Full-only complete → A1 ModDrop complete → A2 Availability complete**。
+
 1. 进入 **Teacher Qualification**，先判断 teacher 是否具备足够、可复现的特权信息优势。
 2. 旧的 **Risk-aware Region Loss** 主线暂停。
-3. 下一篇论文候选假设为 **Selective Privileged Distillation**，但目前尚未验证。
+3. 当前主研究假设为 **Missingness-conditioned selective privileged distillation**，但目前尚未验证。
 4. Teacher、KD、Vulnerability、Reliability 均尚未实现，不得写成已完成或正在运行。
 
 <!-- AUTO_A2_AVAILABILITY_FREEZE_END -->

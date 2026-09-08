@@ -1,0 +1,121 @@
+{
+  "training_completed": true,
+  "final_epoch": 999,
+  "best_validation_metric": 0.9043999910354614,
+  "best_epoch": 977,
+  "training_process_count": 0,
+  "checkpoint_best_path": "/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerModDropAvailabilityMask__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth",
+  "checkpoint_best_sha256": "070250c3ddcba723b1279c7ba77e27e9bc59c7107feaff919dc1a20890fe2689",
+  "checkpoint_final_path": "/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerModDropAvailabilityMask__nnUNetPlans__3d_fullres/fold_0/checkpoint_final.pth",
+  "checkpoint_final_sha256": "59b8fd75adfff06c35a8e1bd63572fc748402d9e6b6d8b9e99cef7a0ab292676",
+  "training_log_clean": true,
+  "a1_directory_unchanged": true,
+  "checkpoint_used": "/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerModDropAvailabilityMask__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth",
+  "checkpoint_trainer_class": "nnUNetTrainerModDropAvailabilityMask",
+  "checkpoint_input_channels": 8,
+  "checkpoint_output_classes": 4,
+  "checkpoint_missing_keys": [],
+  "checkpoint_unexpected_keys": [],
+  "smoke_case_id": "BraTS_0000",
+  "case_is_fold0_validation": true,
+  "fold0_validation_count": 251,
+  "full_availability": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "missing_t1c_availability": [
+    1,
+    0,
+    1,
+    1
+  ],
+  "full_mri_zeroed_channels": [],
+  "missing_t1c_mri_zeroed_channels": [
+    1
+  ],
+  "full_network_channels": 8,
+  "missing_t1c_network_channels": 8,
+  "full_prediction_path": "/root/autodl-tmp/nnunet_brats/risk_aware_v1_implementation_stage2c/runtime/full/BraTS_0000.nii.gz",
+  "missing_t1c_prediction_path": "/root/autodl-tmp/nnunet_brats/risk_aware_v1_implementation_stage2c/runtime/missing_t1c/BraTS_0000.nii.gz",
+  "full_prediction_validation": {
+    "readable": true,
+    "shape_matches_gt": true,
+    "affine_matches_gt": true,
+    "labels": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "finite": true,
+    "nonempty_file": true,
+    "wt_dice": 0.9335819236098045,
+    "tc_dice": 0.9831066330814442,
+    "et_dice": 0.9674165666631223,
+    "mean_dice": 0.9613683744514571
+  },
+  "missing_t1c_prediction_validation": {
+    "readable": true,
+    "shape_matches_gt": true,
+    "affine_matches_gt": true,
+    "labels": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "finite": true,
+    "nonempty_file": true,
+    "wt_dice": 0.9383359144023652,
+    "tc_dice": 0.9319303624728523,
+    "et_dice": 0.8130531152421169,
+    "mean_dice": 0.8944397973724447
+  },
+  "full_wt_dice": 0.9335819236098045,
+  "full_tc_dice": 0.9831066330814442,
+  "full_et_dice": 0.9674165666631223,
+  "full_mean_dice": 0.9613683744514571,
+  "missing_t1c_wt_dice": 0.9383359144023652,
+  "missing_t1c_tc_dice": 0.9319303624728523,
+  "missing_t1c_et_dice": 0.8130531152421169,
+  "missing_t1c_mean_dice": 0.8944397973724447,
+  "availability_zeroing_consistency": "PASS",
+  "availability_inferred_from_zero_mri": false,
+  "sliding_window_receives_8_channels": true,
+  "mirroring_spatial_only": true,
+  "full_prediction_count": "1/1",
+  "missing_t1c_prediction_count": "1/1",
+  "stage1_tests": {
+    "total": 31,
+    "passed": 31,
+    "failed": 0,
+    "errors": 0
+  },
+  "stage2a_tests": {
+    "total": 24,
+    "passed": 24,
+    "failed": 0,
+    "errors": 0
+  },
+  "stage2c_tests": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "errors": 0
+  },
+  "training_restarted": false,
+  "optimizer_step_executed": false,
+  "a1_checkpoint_loaded": false,
+  "full_251_case_inference_started": false,
+  "formal_benchmark_started": false,
+  "kd_implemented": false,
+  "teacher_implemented": false,
+  "vulnerability_implemented": false,
+  "reliability_implemented": false,
+  "project_markdown_updated": false,
+  "git_commit_created": false,
+  "residual_processes": 0,
+  "overall_status": "PASS"
+}

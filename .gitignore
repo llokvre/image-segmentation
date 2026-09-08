@@ -30,6 +30,7 @@ raw/
 preprocessed/
 checkpoints/
 predictions/
+runtime/
 validation/
 imagesTs/
 labelsTs/
@@ -49,6 +50,7 @@ labelsTr/
 
 # Secrets
 .env
+*.pem
 *.key
 *_token*
 *password*

@@ -685,6 +685,6 @@ Modality Dropout nnU-Net：
 
 **A2：WEAK。** Explicit Availability 带来少量正向信号：Missing T1c TC 和 Mean 略有提升，Missing FLAIR WT 略有提升；Missing T1c ET 未改善，Full 基本维持。证据不足以支持其作为核心创新，availability 仅保留为 conditioning variable。A2 不使用“显著提升”“稳健提升”或“SOTA”措辞。
 
-旧的 Risk-aware Region Loss 主线暂停。下一阶段为 **Teacher Qualification**；候选论文主假设为 **Selective Privileged Distillation**，但尚未验证。Teacher、KD、Vulnerability、Reliability 均尚未实现。
+截至本实验冻结，A0 Full-only、A1 ModDrop、A2 Availability 均已完成。旧的 Risk-aware Region Loss 主线暂停，下一阶段为 **Teacher Qualification**；当前主研究假设为 **Missingness-conditioned selective privileged distillation**，但尚未验证。Teacher、KD、Vulnerability、Reliability 均尚未实现。
 
 <!-- AUTO_A2_AVAILABILITY_EXPERIMENT_END -->

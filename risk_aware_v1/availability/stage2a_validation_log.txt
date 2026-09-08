@@ -1,0 +1,276 @@
+Risk-aware V1 A2 — Stage 2A validation log
+Execution time: 2026-07-28T12:44:46.183958+08:00
+Host: AutoDL 835 / autodl-container-c0lvq7fw2w-4e18f09e
+Conda environment: nnunet
+Python: 3.10.20
+PyTorch: 2.12.1+cu130
+CUDA runtime reported by PyTorch: 13.0
+GPU: NVIDIA GeForce RTX 4090
+
+=== Required design/source inputs ===
+[PASS] risk_aware_v1_design_v2/RISK_AWARE_V1_ENGINEERING_DESIGN_V2.md
+[PASS] risk_aware_v1_design_v2/implementation_touchpoints_v2.txt
+[PASS] risk_aware_v1_design_v2/source_code_evidence.txt
+[PASS] risk_aware_v1_design_v2/BLOCKING_DECISIONS_RESOLVED.md
+[PASS] risk_aware_v1_design_v2/IMPLEMENTATION_READINESS_CHECKLIST_V2.md
+[PASS] risk_aware_v1_implementation_stage1/risk_aware_core.py
+[PASS] Active nnUNetTrainerModalityDropout source and inspect signatures
+[PASS] Parent nnUNetTrainer source and inspect signatures
+
+V2 design loaded: PASS
+No prompt/V2 interface conflict found.
+
+Stage 1 hashes:
+2f574f85245f1ac58d8d7896fb5d011282e5ed0bdc3b1002c334907c6f3644b0  risk_aware_core.py
+5895f4f3c34f26730c698ac45ebb1d925cd47939ab9e6108f38d3148957db95d  test_risk_aware_core.py
+
+Baseline/source hashes before implementation:
+e579f2d854db6b8819be1a99dde6a9855921163a358cd6c8b3f563f7c2647dde  nnUNetTrainerModalityDropout.py
+7096efb2040135eb60df3c8bf39cdbcc373e299671fcee365b3aff2f4da4dfbd  nnUNetTrainer.py
+
+Baseline/source hashes after implementation:
+e579f2d854db6b8819be1a99dde6a9855921163a358cd6c8b3f563f7c2647dde  nnUNetTrainerModalityDropout.py
+7096efb2040135eb60df3c8bf39cdbcc373e299671fcee365b3aff2f4da4dfbd  nnUNetTrainer.py
+
+Baseline Trainer modified: NO
+Parent/site-packages modified: NO
+
+=== Active A1 ModDrop protocol audit ===
+Source class: nnUNetTrainerModalityDropout(nnUNetTrainer)
+Sampling function:
+apply_modality_dropout(data: torch.Tensor, probability: float) -> torch.Tensor
+Sampling location: train_step, after augmented batch reaches Trainer and after
+data is moved to the Trainer device, before network forward.
+Granularity: per sample, independently.
+Trigger probability: 0.5 per sample.
+Full input probability: 0.5 per sample.
+Triggered behavior: uniformly choose exactly one of four modalities and zero it.
+Per missing pattern probability: 0.5 * 0.25 = 0.125.
+Validation random dropout: disabled (inherits full-input validation behavior).
+
+A2 preserves the exact torch.rand/torch.randint order and distribution.
+One sampled pattern simultaneously drives MRI zeroing and availability.
+Availability is never independently re-sampled and never inferred from zero MRI.
+
+=== Created files ===
+[PASS] nnUNetTrainerModDropAvailabilityMask.py
+[PASS] availability_integration.py
+[PASS] test_stage2a_integration.py
+[PASS] STAGE2A_API.md
+[PASS] stage2a_validation_log.txt
+
+=== Real interfaces ===
+Class:
+nnUNetTrainerModDropAvailabilityMask(nnUNetTrainer)
+
+build_network_architecture(
+ plans_manager: PlansManager,
+ configuration_manager: ConfigurationManager,
+ num_input_channels: int,
+ num_output_channels: int,
+ enable_deep_supervision: bool=True
+) -> nn.Module
+
+train_step(self, batch: dict) -> dict
+validation_step(self, batch: dict) -> dict
+
+All inspect signatures parent-compatible: PASS
+Double ModDrop detected: NO
+
+=== A2 data flow ===
+augmented MRI [B,4,D,H,W]
+-> one A1-equivalent missing-pattern sample
+-> explicit availability [B,4]
+-> Stage 1 deterministic MRI zeroing
+-> Stage 1 constant spatial broadcast
+-> Stage 1 fixed concatenation
+-> [B,8,D,H,W]
+-> unchanged nnU-Net network/loss control flow
+
+Channel order:
+0 T1n MRI
+1 T1c MRI
+2 T2w MRI
+3 FLAIR MRI
+4 a_T1n
+5 a_T1c
+6 a_T2w
+7 a_FLAIR
+
+Validation:
+availability is always [1,1,1,1]; no random sampler call; MRI unchanged;
+four all-one availability channels appended.
+
+=== Actual Dataset501 network audit ===
+Configuration: Dataset501_BraTS2023 / 3d_fullres
+A1 input channels: 4
+A2 input channels: 8
+A1 output classes: 4
+A2 output classes: 4
+Deep-supervision outputs: 5
+A1 parameter count: 31,199,796
+A2 parameter count: 31,203,252
+Parameter increase: 3,456
+Only parameter-shape difference:
+encoder.stages.0.0.convs.0.conv.weight
+A1 first-convolution shape: [32,4,3,3,3]
+A2 first-convolution shape: [32,8,3,3,3]
+All other parameter shapes unchanged: PASS
+
+Old A1 checkpoint was inspected on CPU only for first-convolution shape.
+Old checkpoint was not passed to A2 load_state_dict.
+Old 4-channel checkpoint compatible with A2: NO
+
+=== Stage 1 regression ===
+Command:
+PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=-1 python -m unittest -v test_risk_aware_core.py
+Result: 31 tests in 0.101 seconds
+Passed: 31
+Failures: 0
+Errors: 0
+Skipped: 0
+Stage 1 regression tests: 31/31 PASS
+
+=== Stage 2A compile ===
+Command:
+PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=-1 python -m py_compile \
+  nnUNetTrainerModDropAvailabilityMask.py availability_integration.py \
+  test_stage2a_integration.py
+Python compile check: PASS
+
+=== Stage 2A unittest final run ===
+Command:
+PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES=-1 python -m unittest -v \
+  test_stage2a_integration.py
+
+[PASS] test_a2_and_baseline_are_different_classes
+[PASS] test_a2_trainer_class_imports
+[PASS] test_availability_channels_are_spatial_constants
+[PASS] test_baseline_trainer_source_unmodified
+[PASS] test_batch_sampling_matches_a1_protocol
+[PASS] test_deep_supervision_configuration_is_unchanged
+[PASS] test_diagnostic_assertion_reports_indices
+[PASS] test_fixed_input_is_deterministic
+[PASS] test_full_sample_generates_all_ones
+[PASS] test_input_changes_from_four_to_eight_channels
+[PASS] test_input_tensor_is_not_modified
+[PASS] test_missing_t1c_generates_expected_vector
+[PASS] test_moddrop_sampler_returns_availability
+[PASS] test_old_checkpoint_is_explicitly_incompatible
+[PASS] test_original_base_loss_accepts_a2_outputs
+[PASS] test_parameter_increase_only_first_convolution
+[PASS] test_real_network_input_channels_are_eight
+[PASS] test_real_network_output_classes_are_four
+[PASS] test_real_signatures_are_parent_compatible
+[PASS] test_same_pattern_drives_zeroing_and_availability
+[PASS] test_synthetic_cpu_full_and_missing_forward_backward
+[PASS] test_training_preparation_samples_exactly_once
+[PASS] test_validation_does_not_call_random_sampler
+[PASS] test_validation_input_uses_full_availability
+
+Final run time: 3.771 seconds
+Stage 2A tests total: 24
+Stage 2A tests passed: 24
+Stage 2A tests failed: 0
+Stage 2A tests errors: 0
+Stage 2A tests skipped: 0
+
+Audit note:
+The first pre-acceptance run passed 23/24 and exposed postponed string
+annotations in the new Trainer signature. The new file was corrected by
+removing postponed annotations; no test was deleted or weakened. The complete
+final run above passed 24/24.
+
+=== Synthetic CPU smoke ===
+Network: actual Dataset501 A2 network
+Batch size: 1
+Spatial size: [64,64,64], the smallest tested safe size with >1 voxel at the
+deepest InstanceNorm stage.
+Conditions: Full [1,1,1,1] and Missing T1c [1,0,1,1]
+Forward: PASS
+Deep-supervision outputs: 5
+Original nnU-Net Dice+CE base loss: finite
+Backward: PASS
+All parameter gradients finite: PASS
+optimizer.step executed: NO
+
+=== Synthetic GPU smoke ===
+Preflight note:
+Two preflight attempts stopped before moving A2 to GPU because this PyTorch
+build rejected explicit device arguments to reset_peak_memory_stats. Neither
+attempt executed forward, loss, or backward. The final smoke used the current
+CUDA device with the no-argument memory-statistics API.
+
+GPU: NVIDIA GeForce RTX 4090
+Network: one actual Dataset501 A2 network
+Batch size: 1
+Spatial size: [64,64,64]
+Condition: Missing T1c [1,0,1,1]
+Input shape: [1,8,64,64,64]
+Deep-supervision outputs: 5
+Loss: 1.6014773845672607
+Forward: PASS
+Backward: PASS
+All gradients finite: PASS
+torch.cuda.memory_allocated before network transfer: 0 bytes
+torch.cuda.memory_allocated after backward: 275,712,512 bytes
+torch.cuda.max_memory_allocated: 731,352,576 bytes
+Memory after object deletion/empty_cache inside process: 56,320 bytes
+Residual GPU compute processes after process exit: 0
+optimizer.step executed: NO
+Checkpoint saved: NO
+
+=== Safety boundary ===
+Existing training code modified: NO
+Existing baseline Trainer modified: NO
+Stage 1 files modified: NO
+Site-packages modified: NO
+Formal Trainer outside isolated Stage 2A directory created: NO
+Predictor created: NO
+optimizer.step executed during tests: NO
+Checkpoint saved: NO
+NIfTI accessed: NO
+Real medical data accessed: NO
+Full training started: NO
+Epoch started: NO
+Real-case inference started: NO
+Calibration started: NO
+A3 implemented: NO
+A4 implemented: NO
+Project Markdown updated: NO
+Git commit created: NO
+GitHub push performed: NO
+
+=== Final summary ===
+V2 design loaded: PASS
+Stage 1 core imported: PASS
+Stage 1 regression tests: 31/31 PASS
+A2 Trainer created: PASS
+Baseline Trainer modified: NO
+Site-packages modified: NO
+A1 ModDrop protocol preserved: PASS
+Availability generated from same missing-pattern sample: PASS
+A2 network input channels: 8
+A2 output classes: 4
+Validation full availability: PASS
+Double ModDrop detected: NO
+A1 parameter count: 31,199,796
+A2 parameter count: 31,203,252
+Parameter increase: 3,456
+Python compile check: PASS
+Stage 2A tests total: 24
+Stage 2A tests passed: 24
+Stage 2A tests failed: 0
+Stage 2A tests errors: 0
+Synthetic forward: PASS
+Synthetic backward: PASS
+Gradient finite: PASS
+GPU smoke test: PASS
+Optimizer step executed: NO
+Checkpoint saved: NO
+NIfTI accessed: NO
+Training started: NO
+Inference started: NO
+A3 implemented: NO
+A4 implemented: NO
+Overall status: PASS
