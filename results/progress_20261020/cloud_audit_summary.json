@@ -1,0 +1,23 @@
+{
+  "root": "/root/autodl-tmp/nnunet_brats",
+  "remote_audit_dir": "/root/autodl-tmp/nnunet_brats/file_audit_20261020_161250",
+  "files": 31402,
+  "directories": 255,
+  "critical_file_sections": {
+    "1": 77,
+    "2": 103,
+    "3": 63,
+    "4": 205,
+    "5": 93
+  },
+  "all_file_csv_rows": 31402,
+  "static_python_files": 72,
+  "active_hash_checks": {
+    "MATCH": 95
+  },
+  "historical_failed_hash_checks": {
+    "MISMATCH": 2,
+    "MATCH": 6
+  },
+  "source_snapshot": "20261020_161250"
+}

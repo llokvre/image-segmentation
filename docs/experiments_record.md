@@ -1,3 +1,5 @@
+> 2026-10-20 状态更新：以下保留历史原文，旧的“当前任务/尚未实现”表述不再代表现状。最新结果见 [研究进度与展望](progress/PROGRESS_AND_OUTLOOK_20261020.md)，下一步为可见特征与独立评价可行性审计，未授权新训练。
+
 # BraTS 2023 实验记录
 
 ## Experiment A0: Full-Modality nnU-Net Baseline

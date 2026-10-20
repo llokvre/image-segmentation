@@ -1,0 +1,218 @@
+[
+  {
+    "path": "teacher_qualification_v1/kd_stage_v1/formal_training/B1/inner_calibration_evaluation/per_case_b1_inner_calibration.csv",
+    "source_sha256": "c6bb147d3fba3729c015d9399399a1f7177aae1ee7896e905d8ad8918b84ada4",
+    "checks": {
+      "columns": [
+        "case_id",
+        "condition",
+        "view",
+        "wt_dice",
+        "tc_dice",
+        "et_dice",
+        "mean_dice",
+        "nll",
+        "brier",
+        "ece",
+        "checkpoint_sha256",
+        "evaluation_scope",
+        "outer_validation_cases_used",
+        "fallback_values_used"
+      ],
+      "rows": 1000,
+      "empty_cells": 0,
+      "nonfinite_tokens": 0,
+      "case_column": "case_id",
+      "condition_column": "condition",
+      "model_column": null,
+      "unique_cases": 200,
+      "unique_case_condition_model_keys": 1000,
+      "duplicate_case_condition_model_keys": 0,
+      "condition_counts": {
+        "B1_full": 200,
+        "B1_missing_t1n": 200,
+        "B1_missing_t1c": 200,
+        "B1_missing_t2w": 200,
+        "B1_missing_flair": 200
+      }
+    }
+  },
+  {
+    "path": "teacher_qualification_v1/kd_stage_v1/formal_training/B2/inner_calibration_evaluation/per_case_b2_inner_calibration.csv",
+    "source_sha256": "cc699919454ad1610a64e031128c77fb15d1ee7fdac50a84f3a9f096a2e9eab1",
+    "checks": {
+      "columns": [
+        "case_id",
+        "condition",
+        "view",
+        "wt_dice",
+        "tc_dice",
+        "et_dice",
+        "mean_dice",
+        "nll",
+        "brier",
+        "ece",
+        "checkpoint_sha256",
+        "evaluation_scope",
+        "outer_validation_cases_used",
+        "fallback_values_used"
+      ],
+      "rows": 1000,
+      "empty_cells": 0,
+      "nonfinite_tokens": 0,
+      "case_column": "case_id",
+      "condition_column": "condition",
+      "model_column": null,
+      "unique_cases": 200,
+      "unique_case_condition_model_keys": 1000,
+      "duplicate_case_condition_model_keys": 0,
+      "condition_counts": {
+        "B2_full": 200,
+        "B2_missing_t1n": 200,
+        "B2_missing_t1c": 200,
+        "B2_missing_t2w": 200,
+        "B2_missing_flair": 200
+      }
+    }
+  },
+  {
+    "path": "teacher_qualification_v1/kd_stage_v1/formal_training/B3/inner_calibration_evaluation/per_case_b3_inner_calibration.csv",
+    "source_sha256": "9f753dfb2e14da1bc595b4043643fb408c39e0167a674154de639dfe3e630568",
+    "checks": {
+      "columns": [
+        "case_id",
+        "condition",
+        "view",
+        "wt_dice",
+        "tc_dice",
+        "et_dice",
+        "mean_dice",
+        "nll",
+        "brier",
+        "ece",
+        "checkpoint_sha256",
+        "evaluation_scope",
+        "outer_validation_cases_used",
+        "fallback_values_used"
+      ],
+      "rows": 1000,
+      "empty_cells": 0,
+      "nonfinite_tokens": 0,
+      "case_column": "case_id",
+      "condition_column": "condition",
+      "model_column": null,
+      "unique_cases": 200,
+      "unique_case_condition_model_keys": 1000,
+      "duplicate_case_condition_model_keys": 0,
+      "condition_counts": {
+        "B3_full": 200,
+        "B3_missing_t1n": 200,
+        "B3_missing_t1c": 200,
+        "B3_missing_t2w": 200,
+        "B3_missing_flair": 200
+      }
+    }
+  },
+  {
+    "path": "teacher_qualification_v1/kd_stage_v1/formal_training/B4/inner_calibration_evaluation/per_case_b4_inner_calibration.csv",
+    "source_sha256": "53b174eda275bd32ccb3f2f7b2cfa21b475cb04561620ce87132fc6e99f69281",
+    "checks": {
+      "columns": [
+        "case_id",
+        "condition",
+        "view",
+        "wt_dice",
+        "tc_dice",
+        "et_dice",
+        "mean_dice",
+        "nll",
+        "brier",
+        "ece",
+        "checkpoint_sha256",
+        "evaluation_scope",
+        "outer_validation_cases_used",
+        "fallback_values_used"
+      ],
+      "rows": 1000,
+      "empty_cells": 0,
+      "nonfinite_tokens": 0,
+      "case_column": "case_id",
+      "condition_column": "condition",
+      "model_column": null,
+      "unique_cases": 200,
+      "unique_case_condition_model_keys": 1000,
+      "duplicate_case_condition_model_keys": 0,
+      "condition_counts": {
+        "B4_full": 200,
+        "B4_missing_t1n": 200,
+        "B4_missing_t1c": 200,
+        "B4_missing_t2w": 200,
+        "B4_missing_flair": 200
+      }
+    }
+  },
+  {
+    "path": "teacher_qualification_v1/kd_stage_v1/projector_audit_20261002/per_case_oof.csv",
+    "source_sha256": "9a1ec361bee12a801e752f86968609dee9165a37ac99eb922b1cd04a2e8371e1",
+    "checks": {
+      "columns": [
+        "case_id",
+        "fold",
+        "teacher_offset_target",
+        "oof_predicted_offset",
+        "b0_et_dice",
+        "projected_et_dice",
+        "delta_et_dice",
+        "b0_et_nll",
+        "projected_et_nll",
+        "delta_et_nll"
+      ],
+      "rows": 800,
+      "empty_cells": 0,
+      "nonfinite_tokens": 0,
+      "case_column": "case_id",
+      "condition_column": null,
+      "model_column": null,
+      "unique_cases": 800,
+      "unique_case_condition_model_keys": 800,
+      "duplicate_case_condition_model_keys": 0
+    }
+  },
+  {
+    "path": "teacher_qualification_v1/unified_evaluation/formal_run/per_case_teacher_qualification.csv",
+    "source_sha256": "16ec9a350f19b83a57178ee90927edb370d1bbf528f5fa01846995fe303c3a77",
+    "checks": {
+      "columns": [
+        "case_id",
+        "condition",
+        "candidate",
+        "view",
+        "wt_dice",
+        "tc_dice",
+        "et_dice",
+        "mean_dice",
+        "nll",
+        "brier",
+        "ece",
+        "checkpoint_sha256",
+        "outer_validation_cases_used"
+      ],
+      "rows": 1000,
+      "empty_cells": 1200,
+      "nonfinite_tokens": 0,
+      "case_column": "case_id",
+      "condition_column": "condition",
+      "model_column": "candidate",
+      "unique_cases": 200,
+      "unique_case_condition_model_keys": 1000,
+      "duplicate_case_condition_model_keys": 0,
+      "condition_counts": {
+        "TQ-T0_full": 200,
+        "TQ-T1_full": 200,
+        "TQ-T2_full": 200,
+        "TQ-T2_missing_t1c": 200,
+        "TQ-T2_missing_flair": 200
+      }
+    }
+  }
+]

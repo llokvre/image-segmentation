@@ -1,0 +1,409 @@
+{
+  "bootstrap_repetitions": 10000,
+  "bootstrap_seed": 20260917,
+  "candidate_qualification": {
+    "TQ-T0": {
+      "advantage": {
+        "ET_missing_T1c": {
+          "lower": 0.19385891113415932,
+          "mean_difference": 0.22260718781258026,
+          "upper": 0.2763182624952252
+        },
+        "TC_missing_T1c": {
+          "lower": 0.08251275522316835,
+          "mean_difference": 0.1011953335018395,
+          "upper": 0.14018576106942224
+        },
+        "WT_missing_FLAIR": {
+          "lower": 0.02333848468248248,
+          "mean_difference": 0.029384417155335157,
+          "upper": 0.04175016001748404
+        }
+      },
+      "calibration_vs_TQ_T0": {
+        "Brier": {
+          "lower": 0.0,
+          "mean_difference": 0.0,
+          "upper": 0.0
+        },
+        "ECE": {
+          "lower": 0.0,
+          "mean_difference": 0.0,
+          "upper": 0.0
+        },
+        "NLL": {
+          "lower": 0.0,
+          "mean_difference": 0.0,
+          "upper": 0.0
+        }
+      },
+      "candidate": "TQ-T0",
+      "full_view": {
+        "ET": 0.8791933678467686,
+        "Mean": 0.912066183679951,
+        "TC": 0.917323451768349,
+        "WT": 0.9396817314247352,
+        "calibration": {
+          "Brier": 0.016125848389751472,
+          "ECE": 0.0067874245852060176,
+          "NLL": 0.044075634019278206
+        }
+      },
+      "gates": {
+        "advantage_all_bonferroni_lowers_positive": true,
+        "advantage_all_means_positive": true,
+        "all_region_means_at_least_0_80": true,
+        "all_regions_noninferior": true,
+        "brier_absolute_limit": true,
+        "brier_relative_margin": true,
+        "ece_absolute_limit": true,
+        "ece_absolute_margin": true,
+        "mean_dice_noninferior": true,
+        "nll_absolute_limit": true,
+        "nll_relative_margin": true
+      },
+      "qualified": true,
+      "quality_vs_TQ_T0": {
+        "ET": {
+          "lower": 0.0,
+          "mean_difference": 0.0,
+          "upper": 0.0
+        },
+        "Mean": {
+          "lower": 0.0,
+          "mean_difference": 0.0,
+          "upper": 0.0
+        },
+        "TC": {
+          "lower": 0.0,
+          "mean_difference": 0.0,
+          "upper": 0.0
+        },
+        "WT": {
+          "lower": 0.0,
+          "mean_difference": 0.0,
+          "upper": 0.0
+        }
+      },
+      "selection_primary_min_advantage_lower": 0.02333848468248248
+    },
+    "TQ-T1": {
+      "advantage": {
+        "ET_missing_T1c": {
+          "lower": 0.19199054882585756,
+          "mean_difference": 0.22013733647182043,
+          "upper": 0.2694261866986774
+        },
+        "TC_missing_T1c": {
+          "lower": 0.08707282231819445,
+          "mean_difference": 0.10328758576948598,
+          "upper": 0.13917870689268563
+        },
+        "WT_missing_FLAIR": {
+          "lower": 0.025519704282876383,
+          "mean_difference": 0.030525466662888415,
+          "upper": 0.04122868311492942
+        }
+      },
+      "calibration_vs_TQ_T0": {
+        "Brier": {
+          "lower": -0.0012094283440626176,
+          "mean_difference": -0.00035501442831576476,
+          "upper": 0.0004559890361286397
+        },
+        "ECE": {
+          "lower": -0.0011885047333744668,
+          "mean_difference": -0.0007332125223779534,
+          "upper": -0.00030449268758109797
+        },
+        "NLL": {
+          "lower": -0.011458873845702048,
+          "mean_difference": -0.006742179955924292,
+          "upper": -0.002712645413471811
+        }
+      },
+      "candidate": "TQ-T1",
+      "full_view": {
+        "ET": 0.8767235165060085,
+        "Mean": 0.9123206671580977,
+        "TC": 0.9194157040359956,
+        "WT": 0.9408227809322883,
+        "calibration": {
+          "Brier": 0.015770833961435707,
+          "ECE": 0.006054212062828064,
+          "NLL": 0.03733345406335391
+        }
+      },
+      "gates": {
+        "advantage_all_bonferroni_lowers_positive": true,
+        "advantage_all_means_positive": true,
+        "all_region_means_at_least_0_80": true,
+        "all_regions_noninferior": true,
+        "brier_absolute_limit": true,
+        "brier_relative_margin": true,
+        "ece_absolute_limit": true,
+        "ece_absolute_margin": true,
+        "mean_dice_noninferior": true,
+        "nll_absolute_limit": true,
+        "nll_relative_margin": true
+      },
+      "qualified": true,
+      "quality_vs_TQ_T0": {
+        "ET": {
+          "lower": -0.016559201543593496,
+          "mean_difference": -0.002469851340759788,
+          "upper": 0.008961803673483728
+        },
+        "Mean": {
+          "lower": -0.005709493588337569,
+          "mean_difference": 0.0002544834781466387,
+          "upper": 0.005679254758713745
+        },
+        "TC": {
+          "lower": -0.00492608868715122,
+          "mean_difference": 0.0020922522676464694,
+          "upper": 0.00922691679254538
+        },
+        "WT": {
+          "lower": -0.000995981435405467,
+          "mean_difference": 0.0011410495075532578,
+          "upper": 0.0038236343348197694
+        }
+      },
+      "selection_primary_min_advantage_lower": 0.025519704282876383
+    },
+    "TQ-T2": {
+      "advantage": {
+        "ET_missing_T1c": {
+          "lower": 0.19090442463251142,
+          "mean_difference": 0.21877707768540897,
+          "upper": 0.2663087933368008
+        },
+        "TC_missing_T1c": {
+          "lower": 0.08600098550748783,
+          "mean_difference": 0.1033954831143209,
+          "upper": 0.1444472427305765
+        },
+        "WT_missing_FLAIR": {
+          "lower": 0.023525532456862723,
+          "mean_difference": 0.02861126330648232,
+          "upper": 0.04020727301351516
+        }
+      },
+      "calibration_vs_TQ_T0": {
+        "Brier": {
+          "lower": -0.001132539458156228,
+          "mean_difference": -0.0003268874148131785,
+          "upper": 0.00031085387183368715
+        },
+        "ECE": {
+          "lower": -0.0008673225577704636,
+          "mean_difference": -0.0004627899515962464,
+          "upper": -0.00013645259330147938
+        },
+        "NLL": {
+          "lower": -0.0073415545563116575,
+          "mean_difference": -0.004024580230964517,
+          "upper": -0.0012793113103802837
+        }
+      },
+      "candidate": "TQ-T2",
+      "full_view": {
+        "ET": 0.8753632577195972,
+        "Mean": 0.9112651455587701,
+        "TC": 0.9195236013808306,
+        "WT": 0.9389085775758823,
+        "calibration": {
+          "Brier": 0.015798960974938298,
+          "ECE": 0.006324634633609771,
+          "NLL": 0.04005105378831368
+        }
+      },
+      "gates": {
+        "advantage_all_bonferroni_lowers_positive": true,
+        "advantage_all_means_positive": true,
+        "all_region_means_at_least_0_80": true,
+        "all_regions_noninferior": true,
+        "brier_absolute_limit": true,
+        "brier_relative_margin": true,
+        "ece_absolute_limit": true,
+        "ece_absolute_margin": true,
+        "mean_dice_noninferior": true,
+        "nll_absolute_limit": true,
+        "nll_relative_margin": true
+      },
+      "qualified": true,
+      "quality_vs_TQ_T0": {
+        "ET": {
+          "lower": -0.015862653663122894,
+          "mean_difference": -0.003830110127171267,
+          "upper": 0.003913205468842969
+        },
+        "Mean": {
+          "lower": -0.005644037957921517,
+          "mean_difference": -0.0008010381211809086,
+          "upper": 0.0033365486910821953
+        },
+        "TC": {
+          "lower": -0.003371246268831712,
+          "mean_difference": 0.002200149612481395,
+          "upper": 0.008390466695740117
+        },
+        "WT": {
+          "lower": -0.0034911658457396815,
+          "mean_difference": -0.00077315384885284,
+          "upper": 0.0022904972515454453
+        }
+      },
+      "selection_primary_min_advantage_lower": 0.023525532456862723
+    }
+  },
+  "completed_at": "2026-09-18T18:01:47+08:00",
+  "condition_summaries": {
+    "TQ-T0_full": {
+      "ET": 0.8791933678467686,
+      "Mean": 0.912066183679951,
+      "TC": 0.917323451768349,
+      "WT": 0.9396817314247352,
+      "calibration": {
+        "Brier": 0.016125848389751472,
+        "ECE": 0.0067874245852060176,
+        "NLL": 0.044075634019278206
+      }
+    },
+    "TQ-T1_full": {
+      "ET": 0.8767235165060085,
+      "Mean": 0.9123206671580977,
+      "TC": 0.9194157040359956,
+      "WT": 0.9408227809322883,
+      "calibration": {
+        "Brier": 0.015770833961435707,
+        "ECE": 0.006054212062828064,
+        "NLL": 0.03733345406335391
+      }
+    },
+    "TQ-T2_full": {
+      "ET": 0.8753632577195972,
+      "Mean": 0.9112651455587701,
+      "TC": 0.9195236013808306,
+      "WT": 0.9389085775758823,
+      "calibration": {
+        "Brier": 0.015798960974938298,
+        "ECE": 0.006324634633609771,
+        "NLL": 0.04005105378831368
+      }
+    },
+    "TQ-T2_missing_flair": {
+      "ET": 0.87031310568921,
+      "Mean": 0.8997767687695327,
+      "TC": 0.9187198863499876,
+      "WT": 0.9102973142694001
+    },
+    "TQ-T2_missing_t1c": {
+      "ET": 0.6565861800341882,
+      "Mean": 0.8016196224844688,
+      "TC": 0.8161281182665096,
+      "WT": 0.9321445691527092
+    }
+  },
+  "evaluation_case_count": 200,
+  "evaluation_cases": "inner_calibration",
+  "fallback_values_used": false,
+  "outer_validation_cases_used": 0,
+  "protocol_status": "FROZEN_BEFORE_TQ_T2",
+  "run_manifest": {
+    "checkpoint_reports": {
+      "TQ-T0": {
+        "candidate": "TQ-T0",
+        "checkpoint": "/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerTQFullOnly__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth",
+        "checkpoint_epoch": 992,
+        "checkpoint_sha256": "74d188dbb085a75d9287966dce8f00ca438146d15f1fff32c00bc32062d3a0d2",
+        "input_channels": 4,
+        "mirroring_axes": [
+          0,
+          1,
+          2
+        ],
+        "output_classes": 4,
+        "trainer_name": "nnUNetTrainerTQFullOnly"
+      },
+      "TQ-T1": {
+        "candidate": "TQ-T1",
+        "checkpoint": "/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerTQModalityDropout__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth",
+        "checkpoint_epoch": 839,
+        "checkpoint_sha256": "96049e182c1a7d2e45e1772ed02eba2c93b70cc76479fa32359187be254081b8",
+        "input_channels": 4,
+        "mirroring_axes": [
+          0,
+          1,
+          2
+        ],
+        "output_classes": 4,
+        "trainer_name": "nnUNetTrainerTQModalityDropout"
+      },
+      "TQ-T2": {
+        "candidate": "TQ-T2",
+        "checkpoint": "/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerTQAvailability__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth",
+        "checkpoint_epoch": 984,
+        "checkpoint_sha256": "175bfeb82a0162b7dc73303cf30d711bde0a16b77e6c7c3460469ca1d388546e",
+        "input_channels": 8,
+        "mirroring_axes": [
+          0,
+          1,
+          2
+        ],
+        "output_classes": 4,
+        "trainer_name": "nnUNetTrainerTQAvailability"
+      }
+    },
+    "conditions": [
+      "TQ-T0_full",
+      "TQ-T1_full",
+      "TQ-T2_full",
+      "TQ-T2_missing_t1c",
+      "TQ-T2_missing_flair"
+    ],
+    "created_at": "2026-09-18T18:01:46+08:00",
+    "evaluation_case_count": 200,
+    "evaluation_cases": "inner_calibration",
+    "evaluation_spec_sha256": "1fb7429a23a02f14fd5655cb543c9d47e330435d6537c075a72d661689a52f34",
+    "frozen_protocol_sha256": "688ea1d9403c47a663e8a83e59a7d84c34d9b15cade8ace7267e127ea8a77af1",
+    "inner_split_sha256": "4c44af1ac186e8cc612b3e2fb9cfae7668e146e26c17ae163dafa81713c7ab93",
+    "metric_core_sha256": "2067eeb9eec640355917099f9b2df446f8a745bcb251182d97f3b0da77666774",
+    "outer_validation_cases_used": 0,
+    "status": "READY",
+    "total_inferences": 1000
+  },
+  "selection": {
+    "selected_teacher": "TQ-T1",
+    "status": "TEACHER_SELECTED",
+    "trace": {
+      "after_advantage_tie": [
+        "TQ-T0",
+        "TQ-T1",
+        "TQ-T2"
+      ],
+      "after_brier_tie": [
+        "TQ-T1"
+      ],
+      "after_ece_tie": [
+        "TQ-T1"
+      ],
+      "after_full_mean_tie": [
+        "TQ-T0",
+        "TQ-T1",
+        "TQ-T2"
+      ],
+      "after_nll_tie": [
+        "TQ-T1"
+      ],
+      "initial_qualified": [
+        "TQ-T0",
+        "TQ-T1",
+        "TQ-T2"
+      ]
+    }
+  },
+  "status": "COMPLETE",
+  "total_case_condition_rows": 1000
+}

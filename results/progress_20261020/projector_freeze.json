@@ -1,0 +1,19 @@
+{
+  "b0_checkpoint_sha256": "175bfeb82a0162b7dc73303cf30d711bde0a16b77e6c7c3460469ca1d388546e",
+  "b0_trainer_sha256": "5f37c25273d2bdcb2635a5c7cb0a0579f7aa2abf5d08320852c1edd8f624ffd6",
+  "case_count": 800,
+  "fallback_values_used": false,
+  "fold_count": 5,
+  "folds_sha256": "d432317d4ab32a244542585bf7e8de2c9257020b858a487f790f26166c6e25bd",
+  "inner_calibration_cases_used": 0,
+  "inner_split_sha256": "4c44af1ac186e8cc612b3e2fb9cfae7668e146e26c17ae163dafa81713c7ab93",
+  "outer_validation_cases_used": 0,
+  "primary_endpoint": "mean_case_paired_ET_Dice_missing_T1c_projected_minus_B0",
+  "protocol_sha256": "f96d875471b3e7d7c6154eafa6299b379bca8c3db8ffbe876b48ddbe5aaf339f",
+  "script_sha256": "0cb07693b3b1499453c4968c294ae0d4971fb1fc717ff362cfe9af95a4c97324",
+  "secondary_endpoint": "mean_case_paired_binary_ET_NLL_missing_T1c_projected_minus_B0",
+  "status": "FROZEN",
+  "teacher_checkpoint_sha256": "96049e182c1a7d2e45e1772ed02eba2c93b70cc76479fa32359187be254081b8",
+  "teacher_trainer_sha256": "d10e9f1eedf24a0fa6330048dc407edbbf9c34c301972e8ce433d35438616c96",
+  "tq_evaluator_sha256": "3610293e60df80ad1cf91611477753e26c14380777dc1bee2634d8392b32d30d"
+}

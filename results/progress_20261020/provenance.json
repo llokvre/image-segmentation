@@ -1,0 +1,55 @@
+{
+  "snapshot": "20261020_161250",
+  "remote_root": "/root/autodl-tmp/nnunet_brats",
+  "sources": [
+    {
+      "remote_relative_path": "teacher_qualification_v1/kd_stage_v1/formal_training/B1/inner_calibration_evaluation/b1_inner_calibration_summary.json",
+      "remote_source_sha256": "fd186f45dff64497eb5174eaca8d2c6073396bffbb090f5b12846e9c890cedf4",
+      "local_file": "results/progress_20261020/b1_inner_calibration_summary.json",
+      "local_export_sha256": "0b47b1753c20892201eb94b10177456de021f63504ac35a6ff02d3456e629886",
+      "representation": "parsed JSON reserialized; local bytes differ from source"
+    },
+    {
+      "remote_relative_path": "teacher_qualification_v1/kd_stage_v1/formal_training/B2/inner_calibration_evaluation/b2_inner_calibration_summary.json",
+      "remote_source_sha256": "77c78728e7a01b2963190d5b44552d8e8f7c9146a267f8f7b8fdf17cb3a304f7",
+      "local_file": "results/progress_20261020/b2_inner_calibration_summary.json",
+      "local_export_sha256": "eb4057e3d7b3b65fc238bbec52b05498bd9ba6d95b94aa417fe706fd9a749047",
+      "representation": "parsed JSON reserialized; local bytes differ from source"
+    },
+    {
+      "remote_relative_path": "teacher_qualification_v1/kd_stage_v1/formal_training/B3/inner_calibration_evaluation/b3_inner_calibration_summary.json",
+      "remote_source_sha256": "a89c2c832b17bad77897d61d141d71ecc88890d041710f584c03645b1bc08790",
+      "local_file": "results/progress_20261020/b3_inner_calibration_summary.json",
+      "local_export_sha256": "54b20533f55cd39f6c389ecede71c844087c038bac340162f36062d20dc8629a",
+      "representation": "parsed JSON reserialized; local bytes differ from source"
+    },
+    {
+      "remote_relative_path": "teacher_qualification_v1/kd_stage_v1/formal_training/B4/inner_calibration_evaluation/b4_inner_calibration_summary.json",
+      "remote_source_sha256": "a50b66875cebcabad27cddbb7aef87d1ff85a507eeb4c13ecdf314825dbaf6aa",
+      "local_file": "results/progress_20261020/b4_inner_calibration_summary.json",
+      "local_export_sha256": "f6bc030a31e3bc88f29044dcb9bd010fe6efdc5009dff0550b0786224455286b",
+      "representation": "parsed JSON reserialized; local bytes differ from source"
+    },
+    {
+      "remote_relative_path": "teacher_qualification_v1/kd_stage_v1/projector_audit_20261002/freeze.json",
+      "remote_source_sha256": "34cd8f4fa4232d2a26e806bac82d6e01ed0a6985ce8ea12df3ecb444ae0b3b11",
+      "local_file": "results/progress_20261020/projector_freeze.json",
+      "local_export_sha256": "a51a7250864b34e85024618a46b28aa782abf1231c87eedcc8eabe70ac7a0a40",
+      "representation": "parsed JSON reserialized; local bytes differ from source"
+    },
+    {
+      "remote_relative_path": "teacher_qualification_v1/kd_stage_v1/projector_audit_20261002/summary.json",
+      "remote_source_sha256": "b15789072288f394423e079b49bcc7f598939c1fb4411ed28d67d9910251da5c",
+      "local_file": "results/progress_20261020/projector_summary.json",
+      "local_export_sha256": "fc7be0c35f9d512549e0b1b3a058be776ffdd86ef7fe865aa2307e24ba3afaea",
+      "representation": "parsed JSON reserialized; local bytes differ from source"
+    },
+    {
+      "remote_relative_path": "teacher_qualification_v1/unified_evaluation/formal_run/teacher_qualification_summary.json",
+      "remote_source_sha256": "237778871afbbc6ad936eef8092266429aeb74d62e6251284cef2870f297f3de",
+      "local_file": "results/progress_20261020/teacher_qualification_summary.json",
+      "local_export_sha256": "62098e7bff8d93cc84e5ddab437893f8c7ad3236cd725afe1af5506c7f098939",
+      "representation": "parsed JSON reserialized; local bytes differ from source"
+    }
+  ]
+}

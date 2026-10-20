@@ -1,0 +1,213 @@
+{
+  "bootstrap_repetitions": 10000,
+  "bootstrap_seed": 20260917,
+  "case_condition_rows": 1000,
+  "case_count": 200,
+  "checkpoint_epoch": 994,
+  "checkpoint_sha256": "6330080e8a7a83ef4345753d3d9e7bf7ce8249f6e08ffb8e6976bc9054523ca4",
+  "completed_at": "2026-09-29T23:23:08+08:00",
+  "condition_summaries": {
+    "B4_full": {
+      "calibration": {
+        "Brier": 0.015600438580353464,
+        "ECE": 0.006073232639352146,
+        "NLL": 0.03904552703188938
+      },
+      "dice": {
+        "ET": 0.8779633140281129,
+        "Mean": 0.912960117090522,
+        "TC": 0.920905131761958,
+        "WT": 0.9400119054814949
+      }
+    },
+    "B4_missing_flair": {
+      "calibration": {
+        "Brier": 0.022360758679772365,
+        "ECE": 0.008289796060378385,
+        "NLL": 0.04953821879084217
+      },
+      "dice": {
+        "ET": 0.869182989071939,
+        "Mean": 0.8983206927765724,
+        "TC": 0.9200248567514248,
+        "WT": 0.9057542325063537
+      }
+    },
+    "B4_missing_t1c": {
+      "calibration": {
+        "Brier": 0.0309843574024864,
+        "ECE": 0.012269230531707174,
+        "NLL": 0.07417504859029442
+      },
+      "dice": {
+        "ET": 0.6381071492941033,
+        "Mean": 0.7844802296289163,
+        "TC": 0.7845872956278777,
+        "WT": 0.930746243964768
+      }
+    },
+    "B4_missing_t1n": {
+      "calibration": {
+        "Brier": 0.01590476746215482,
+        "ECE": 0.006100825409356161,
+        "NLL": 0.037257748982168465
+      },
+      "dice": {
+        "ET": 0.8707234717987171,
+        "Mean": 0.9097379915831492,
+        "TC": 0.9195792478478828,
+        "WT": 0.9389112551028472
+      }
+    },
+    "B4_missing_t2w": {
+      "calibration": {
+        "Brier": 0.016417448880774354,
+        "ECE": 0.006303612422347937,
+        "NLL": 0.03892732667322279
+      },
+      "dice": {
+        "ET": 0.871591275447274,
+        "Mean": 0.9098349948782278,
+        "TC": 0.9221048075658063,
+        "WT": 0.9358089016216035
+      }
+    }
+  },
+  "evaluation_scope": "inner_calibration_only",
+  "fallback_values_used": false,
+  "outer_validation_cases_used": 0,
+  "paired_vs_frozen_B0": {
+    "B4_full": {
+      "baseline_condition": "TQ-T2_full",
+      "calibration": {
+        "Brier": {
+          "lower": -0.0006427128784188034,
+          "mean_difference": -0.00019852239458482927,
+          "upper": 0.00018839501130451342
+        },
+        "ECE": {
+          "lower": -0.00046591497667352347,
+          "mean_difference": -0.00025140199425762464,
+          "upper": -6.10361119284592e-05
+        },
+        "NLL": {
+          "lower": -0.0026423663354320777,
+          "mean_difference": -0.0010055267564243059,
+          "upper": 0.0005664080446239846
+        }
+      },
+      "dice": {
+        "ET": {
+          "lower": -0.0023339052969050434,
+          "mean_difference": 0.002600056308515756,
+          "upper": 0.008807170021672122
+        },
+        "Mean": {
+          "lower": -0.0007133132315072839,
+          "mean_difference": 0.0016949715317519545,
+          "upper": 0.004321384775102196
+        },
+        "TC": {
+          "lower": -0.002401538357021393,
+          "mean_difference": 0.0013815303811275726,
+          "upper": 0.006264368985180571
+        },
+        "WT": {
+          "lower": -0.000692045762781979,
+          "mean_difference": 0.0011033279056125195,
+          "upper": 0.0030191614055954824
+        }
+      }
+    },
+    "B4_missing_flair": {
+      "baseline_condition": "TQ-T2_missing_flair",
+      "calibration": {},
+      "dice": {
+        "ET": {
+          "lower": -0.0059121314915082405,
+          "mean_difference": -0.0011301166172711164,
+          "upper": 0.0030791927345961787
+        },
+        "Mean": {
+          "lower": -0.005043470728533872,
+          "mean_difference": -0.0014560759929601753,
+          "upper": 0.0017025516296987509
+        },
+        "TC": {
+          "lower": -0.005399967392041952,
+          "mean_difference": 0.0013049704014371076,
+          "upper": 0.007163147935528835
+        },
+        "WT": {
+          "lower": -0.007346912384736973,
+          "mean_difference": -0.00454308176304652,
+          "upper": -0.0017759577998944683
+        }
+      }
+    },
+    "B4_missing_t1c": {
+      "baseline_condition": "TQ-T2_missing_t1c",
+      "calibration": {},
+      "dice": {
+        "ET": {
+          "lower": -0.03616954249791595,
+          "mean_difference": -0.018479030740084935,
+          "upper": -0.0013228548822680486
+        },
+        "Mean": {
+          "lower": -0.026470152318271302,
+          "mean_difference": -0.017139392855552642,
+          "upper": -0.007940043168372815
+        },
+        "TC": {
+          "lower": -0.04388484248599159,
+          "mean_difference": -0.03154082263863192,
+          "upper": -0.019752059519982983
+        },
+        "WT": {
+          "lower": -0.003502150511216094,
+          "mean_difference": -0.0013983251879410958,
+          "upper": 0.0009440150492675004
+        }
+      }
+    }
+  },
+  "run_manifest": {
+    "bootstrap_repetitions": 10000,
+    "bootstrap_seed": 20260917,
+    "case_manifest_sha256": "e004cecdffedc37f697c2db2756a8767fa21d6503f5cb8dc9d10a4a8ec0bbb99",
+    "checkpoint": {
+      "candidate": "KD-B4",
+      "checkpoint": "/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerTQKDB4__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth",
+      "checkpoint_epoch": 994,
+      "checkpoint_sha256": "6330080e8a7a83ef4345753d3d9e7bf7ce8249f6e08ffb8e6976bc9054523ca4",
+      "input_channels": 8,
+      "mirroring_axes": [
+        0,
+        1,
+        2
+      ],
+      "output_classes": 4,
+      "predictor_class": "AvailabilityPredictor",
+      "trainer_name": "nnUNetTrainerTQKDB4"
+    },
+    "conditions": [
+      "B4_full",
+      "B4_missing_t1n",
+      "B4_missing_t1c",
+      "B4_missing_t2w",
+      "B4_missing_flair"
+    ],
+    "created_at": "2026-09-29T23:23:08+08:00",
+    "evaluation_case_count": 200,
+    "evaluation_scope": "inner_calibration_only",
+    "expected_case_condition_rows": 1000,
+    "fallback_values_used": false,
+    "inner_split_sha256": "4c44af1ac186e8cc612b3e2fb9cfae7668e146e26c17ae163dafa81713c7ab93",
+    "outer_validation_cases_used": 0,
+    "schema_version": "kd-b4-inner-calibration-v1.0",
+    "status": "READY"
+  },
+  "schema_version": "kd-b4-inner-calibration-v1.0",
+  "status": "COMPLETE"
+}

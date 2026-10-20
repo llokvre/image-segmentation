@@ -2,12 +2,14 @@
 
 This repository records experiments for BraTS 2023 GLI missing-modality brain tumor segmentation.
 
-## Current stage
+## Current status — 2026-10-20
 
-- Full-only nnU-Net baseline completed.
-- Zero-filled missing-modality direct-inference stress test completed.
-- Modality Dropout nnU-Net baseline completed.
-- Paper-ready tables and figures generated.
+- A0/A1/A2, teacher qualification, B1–B4 and the 800-case projection audit are archived.
+- B1–B4 did not improve the Missing T1c ET primary endpoint; the tested case-level projection route failed its gate.
+- No new training is authorized. Next: a zero-training feasibility/leakage audit, not another 1000-epoch run.
+- [完整中文进度与展望](docs/progress/PROGRESS_AND_OUTLOOK_20261020.md)
+- [当前唯一下一步](CURRENT_NEXT_STEP.md) · [核实指标与来源哈希](results/progress_20261020/README.md)
+- The sections below describe the historical baseline protocol, not a new independent validation. The repeatedly used 200 cases are development data; the historical 251 cases are not an untouched external cohort.
 
 ## Dataset
 

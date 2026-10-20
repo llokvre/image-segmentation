@@ -1,0 +1,213 @@
+{
+  "bootstrap_repetitions": 10000,
+  "bootstrap_seed": 20260917,
+  "case_condition_rows": 1000,
+  "case_count": 200,
+  "checkpoint_epoch": 979,
+  "checkpoint_sha256": "2db8cef639678a31a753be0da67cd073d71cac3069caa136f2ef08b2a2f32dec",
+  "completed_at": "2026-09-23T23:08:21+08:00",
+  "condition_summaries": {
+    "B2_full": {
+      "calibration": {
+        "Brier": 0.015880126293052833,
+        "ECE": 0.006168256002464896,
+        "NLL": 0.039982216870961186
+      },
+      "dice": {
+        "ET": 0.8756373951804846,
+        "Mean": 0.9116157695159697,
+        "TC": 0.9198740571003822,
+        "WT": 0.939335856267042
+      }
+    },
+    "B2_missing_flair": {
+      "calibration": {
+        "Brier": 0.022750833121470953,
+        "ECE": 0.007999820207426912,
+        "NLL": 0.04799713230040124
+      },
+      "dice": {
+        "ET": 0.871769358310517,
+        "Mean": 0.8982955172813041,
+        "TC": 0.9205433761987564,
+        "WT": 0.9025738173346389
+      }
+    },
+    "B2_missing_t1c": {
+      "calibration": {
+        "Brier": 0.029147147831433007,
+        "ECE": 0.01108383981813295,
+        "NLL": 0.06728279673751203
+      },
+      "dice": {
+        "ET": 0.6523490229892361,
+        "Mean": 0.7946813941490884,
+        "TC": 0.7999289935895841,
+        "WT": 0.9317661658684449
+      }
+    },
+    "B2_missing_t1n": {
+      "calibration": {
+        "Brier": 0.015993532687684758,
+        "ECE": 0.00602738779544818,
+        "NLL": 0.03661170893399594
+      },
+      "dice": {
+        "ET": 0.8767715887301734,
+        "Mean": 0.9119256871272424,
+        "TC": 0.9203910170493248,
+        "WT": 0.9386144556022289
+      }
+    },
+    "B2_missing_t2w": {
+      "calibration": {
+        "Brier": 0.016536280460181366,
+        "ECE": 0.0061446659691198405,
+        "NLL": 0.03839341918439398
+      },
+      "dice": {
+        "ET": 0.8792217520369897,
+        "Mean": 0.9115857697410514,
+        "TC": 0.9201097326789673,
+        "WT": 0.9354258245071974
+      }
+    }
+  },
+  "evaluation_scope": "inner_calibration_only",
+  "fallback_values_used": false,
+  "outer_validation_cases_used": 0,
+  "paired_vs_frozen_B0": {
+    "B2_full": {
+      "baseline_condition": "TQ-T2_full",
+      "calibration": {
+        "Brier": {
+          "lower": -0.0004246496730553787,
+          "mean_difference": 8.116531811453978e-05,
+          "upper": 0.000573967572669441
+        },
+        "ECE": {
+          "lower": -0.00040513136395115576,
+          "mean_difference": -0.000156378631144875,
+          "upper": 8.85361751337793e-05
+        },
+        "NLL": {
+          "lower": -0.0017385529336581347,
+          "mean_difference": -6.88369173524989e-05,
+          "upper": 0.0015676834979803434
+        }
+      },
+      "dice": {
+        "ET": {
+          "lower": -0.003639737506093287,
+          "mean_difference": 0.00027413746088730774,
+          "upper": 0.005151419949520997
+        },
+        "Mean": {
+          "lower": -0.0028724369091335947,
+          "mean_difference": 0.0003506239571995837,
+          "upper": 0.003971148132208105
+        },
+        "TC": {
+          "lower": -0.007645925107803704,
+          "mean_difference": 0.00035045571955177933,
+          "upper": 0.009935251404055084
+        },
+        "WT": {
+          "lower": -0.0013476226992566313,
+          "mean_difference": 0.00042727869115965047,
+          "upper": 0.0023873608824930836
+        }
+      }
+    },
+    "B2_missing_flair": {
+      "baseline_condition": "TQ-T2_missing_flair",
+      "calibration": {},
+      "dice": {
+        "ET": {
+          "lower": -0.0014976384262025228,
+          "mean_difference": 0.0014562526213071328,
+          "upper": 0.004501542160558117
+        },
+        "Mean": {
+          "lower": -0.004390882920869595,
+          "mean_difference": -0.0014812514882284872,
+          "upper": 0.001236700786354015
+        },
+        "TC": {
+          "lower": -0.005305654654152921,
+          "mean_difference": 0.0018234898487686025,
+          "upper": 0.008792352837266341
+        },
+        "WT": {
+          "lower": -0.010623686835393843,
+          "mean_difference": -0.007723496934761165,
+          "upper": -0.0049755404644526696
+        }
+      }
+    },
+    "B2_missing_t1c": {
+      "baseline_condition": "TQ-T2_missing_t1c",
+      "calibration": {},
+      "dice": {
+        "ET": {
+          "lower": -0.02155786087804517,
+          "mean_difference": -0.004237157044952119,
+          "upper": 0.012324064379997411
+        },
+        "Mean": {
+          "lower": -0.015573026001000008,
+          "mean_difference": -0.006938228335380551,
+          "upper": 0.001643815784953345
+        },
+        "TC": {
+          "lower": -0.02732124714812324,
+          "mean_difference": -0.016199124676925417,
+          "upper": -0.005761706149348129
+        },
+        "WT": {
+          "lower": -0.002235459807113403,
+          "mean_difference": -0.00037840328426410886,
+          "upper": 0.0017785083311671506
+        }
+      }
+    }
+  },
+  "run_manifest": {
+    "bootstrap_repetitions": 10000,
+    "bootstrap_seed": 20260917,
+    "case_manifest_sha256": "e004cecdffedc37f697c2db2756a8767fa21d6503f5cb8dc9d10a4a8ec0bbb99",
+    "checkpoint": {
+      "candidate": "KD-B2",
+      "checkpoint": "/root/autodl-tmp/nnunet_brats/nnUNet_results/Dataset501_BraTS2023/nnUNetTrainerTQKDB2__nnUNetPlans__3d_fullres/fold_0/checkpoint_best.pth",
+      "checkpoint_epoch": 979,
+      "checkpoint_sha256": "2db8cef639678a31a753be0da67cd073d71cac3069caa136f2ef08b2a2f32dec",
+      "input_channels": 8,
+      "mirroring_axes": [
+        0,
+        1,
+        2
+      ],
+      "output_classes": 4,
+      "predictor_class": "AvailabilityPredictor",
+      "trainer_name": "nnUNetTrainerTQKDB2"
+    },
+    "conditions": [
+      "B2_full",
+      "B2_missing_t1n",
+      "B2_missing_t1c",
+      "B2_missing_t2w",
+      "B2_missing_flair"
+    ],
+    "created_at": "2026-09-23T23:08:21+08:00",
+    "evaluation_case_count": 200,
+    "evaluation_scope": "inner_calibration_only",
+    "expected_case_condition_rows": 1000,
+    "fallback_values_used": false,
+    "inner_split_sha256": "4c44af1ac186e8cc612b3e2fb9cfae7668e146e26c17ae163dafa81713c7ab93",
+    "outer_validation_cases_used": 0,
+    "schema_version": "kd-b2-inner-calibration-v1.0",
+    "status": "READY"
+  },
+  "schema_version": "kd-b2-inner-calibration-v1.0",
+  "status": "COMPLETE"
+}

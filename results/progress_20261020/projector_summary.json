@@ -1,0 +1,30 @@
+{
+  "b0_mean_et_dice": 0.7213456828158666,
+  "b0_mean_et_nll": 0.024471725805680845,
+  "case_count": 800,
+  "condition": "missing_t1c",
+  "fallback_values_used": false,
+  "fold_count": 5,
+  "freeze_sha256": "34cd8f4fa4232d2a26e806bac82d6e01ed0a6985ce8ea12df3ecb444ae0b3b11",
+  "inner_calibration_cases_used": 0,
+  "limitation": "Only projector OOF; teacher and B0 were trained on these 800 cases.",
+  "outer_validation_cases_used": 0,
+  "paired_et_dice_ci95": [
+    -0.00360186912134729,
+    -0.0012976154497031356
+  ],
+  "paired_et_nll_ci95": [
+    -0.00042517268536102794,
+    0.00023356791814774442
+  ],
+  "paired_mean_delta_et_dice": -0.0022981014577611552,
+  "paired_mean_delta_et_nll": -0.00015457692117456026,
+  "per_case_csv_sha256": "9a1ec361bee12a801e752f86968609dee9165a37ac99eb922b1cd04a2e8371e1",
+  "projected_mean_et_dice": 0.7190475813581054,
+  "projected_mean_et_nll": 0.02431714888450628,
+  "status": "FAIL_REJECT_THIS_PROJECTION",
+  "teacher_oof_mse": 3.8948894491038475,
+  "teacher_oof_r2_vs_fold_train_mean": 0.006452895300235517,
+  "teacher_oof_r2_vs_zero": 0.0512778750427606,
+  "teacher_target_clipped_cases": 53
+}
